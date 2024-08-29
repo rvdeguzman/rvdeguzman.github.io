@@ -14,14 +14,17 @@ export default function Home() {
           className="absolute z-10 w-full max-w-md mx-auto"
           style={{ top: "60%" }}
         >
-          <div className="bg-yellow-300 text-black p-4 rounded-md shadow-md text-center">
-            <p className="font-bold">
+          <div className="bg-gruvbox-yellow text-black p-4 rounded-md shadow-md text-center">
+            <p className="font-bold text-gruvbox-bg">
               🚧 This site is currently under construction 🚧
             </p>
           </div>
         </div>
         <div className="z-0">
           <SpinningModel />
+        </div>
+        <div className="bottom-0 left-0 p-4">
+          <p className="text-gruvbox-fg">we will be back shortly - rv</p>
         </div>
       </div>
     </main>
