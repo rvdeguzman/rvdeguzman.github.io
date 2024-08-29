@@ -59,7 +59,8 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="relative flex flex-col items-center justify-center h-[400px]">
+      {/* Spinning model section */}
+      <div className="relative flex flex-col items-center justify-center h-[300px] mb-12">
         <div
           className="absolute z-10 w-full max-w-md mx-auto"
           style={{ top: "60%" }}
@@ -78,7 +79,20 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col items-start justify-center h-[250px] w-full max-w-4xl mx-auto">
+      {/* Sticky note section */}
+      <div className="absolute top-24 right-24 max-w-xs z-10">
+        <div className="bg-gruvbox-yellow text-gruvbox-bg p-4 rounded-md shadow-md transform rotate-2">
+          <p className="font-bold text-sm mb-2">📌 todos:</p>
+          <p className="text-xs">
+            - add photos for projects <br />- add more 3d models, and
+            interactivity???? <br />- add blog section (?) <br />- add gear
+            section <br />- add resume <br />- add contact info
+          </p>
+        </div>
+      </div>
+
+      {/* Introduction section */}
+      <div className="flex flex-col items-start justify-center w-full max-w-4xl mx-auto mb-24 mt-16">
         <h1 className="text-gruvbox-fg text-4xl font-bold mb-4">
           {greeting}, I'm Rafael Vincent,
         </h1>
@@ -173,11 +187,10 @@ export default function Home() {
                 </a>
               </span>
               <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
-                Cross platform mobile application to interface with Acculete
-                devices.
+                Building a cross platform mobile application to interface with
+                the Acculete device.
               </span>
               <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
-                {" "}
                 Flutter • Dart • Firebase
               </span>
             </li>
@@ -233,7 +246,8 @@ export default function Home() {
                 StudyNoise
               </span>
               <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-normal">
-                Ambient sound mixer for customized study environments
+                A white noise application that allows users to layer different
+                sounds to create a custom study environment.
               </span>
               <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
                 Dart • Flutter • Firebase
