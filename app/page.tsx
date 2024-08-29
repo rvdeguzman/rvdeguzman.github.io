@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useInView } from "../hooks/useInView";
 
 // Dynamically import the SpinningModel component with SSR disabled
 const SpinningModel = dynamic(() => import("../components/SpinningModel"), {
@@ -24,6 +25,37 @@ export default function Home() {
       setGreeting("hi");
     }
   }, []);
+
+  const [educationRef, educationInView] = useInView({ threshold: 0.1 }) as [
+    React.RefObject<HTMLDivElement>,
+    boolean
+  ];
+  const [workRef, workInView] = useInView({ threshold: 0.1 }) as [
+    React.RefObject<HTMLDivElement>,
+    boolean
+  ];
+  const [projectsRef, projectsInView] = useInView({ threshold: 0.1 }) as [
+    React.RefObject<HTMLDivElement>,
+    boolean
+  ];
+
+  const [animationsPlayed, setAnimationsPlayed] = useState({
+    education: false,
+    work: false,
+    projects: false,
+  });
+
+  useEffect(() => {
+    if (workInView && !animationsPlayed.work) {
+      setAnimationsPlayed((prev) => ({ ...prev, work: true }));
+    }
+    if (educationInView && !animationsPlayed.education) {
+      setAnimationsPlayed((prev) => ({ ...prev, education: true }));
+    }
+    if (projectsInView && !animationsPlayed.projects) {
+      setAnimationsPlayed((prev) => ({ ...prev, projects: true }));
+    }
+  }, [workInView, educationInView, projectsInView]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -57,75 +89,106 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="flex flex-col items-start justify-center h-[400px] w-full max-w-4xl mx-auto">
-        <h2 className="text-gruvbox-fg text-4xl font-bold mb-4">education</h2>
-        <ul className="text-gruvbox-fg max-w-2xl">
-          <li>
-            <span className="font-bold">B.CompSc - Concordia University:</span>
-            <span className="text-gruvbox-fg text-sm font-normal">
-              Computer Science
-            </span>
-          </li>
-          <li>
-            <span className="font-bold">
-              DEC / Associate's Degree - John Abbott College:
-            </span>
-            <span className="text-gruvbox-fg text-sm font-normal">
-              Computer Science
-            </span>
-          </li>
-        </ul>
-      </div>
+      <div className="flex flex-col items-start justify-center w-full max-w-4xl mx-auto">
+        <div
+          ref={educationRef}
+          className={`flex flex-col items-start w-full mb-24 transition-all duration-1000 ${
+            animationsPlayed.education
+              ? "opacity-100 translate-x-0"
+              : educationInView
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 -translate-x-full"
+          }`}
+        >
+          <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">education</h2>
+          <ul className="text-gruvbox-fg max-w-2xl space-y-4">
+            <li className="flex flex-col">
+              <span className="font-bold text-lg">
+                B.CompSc - Concordia University
+              </span>
+              <span className="text-gruvbox-fg text-sm mt-1">
+                Computer Science
+              </span>
+            </li>
+            <li className="flex flex-col">
+              <span className="font-bold text-lg">
+                DEC / Associate's Degree - John Abbott College
+              </span>
+              <span className="text-gruvbox-fg text-sm mt-1">
+                Computer Science
+              </span>
+            </li>
+          </ul>
+        </div>
 
-      <div className="flex flex-col items-start justify-center h-[400px] w-full max-w-4xl mx-auto">
-        <h2 className="text-gruvbox-fg text-4xl font-bold mb-4">
-          work experience
-        </h2>
-        <ul className="text-gruvbox-fg max-w-2xl">
-          <li>
-            <span className="font-bold">Acculete:</span>
-            <span className="text-gruvbox-fg text-sm font-normal">
-              Mobile App Developer
-            </span>
-          </li>
-          <li>
-            <span className="font-bold">Chargehub:</span>
-            <span className="text-gruvbox-fg text-sm font-normal">
-              Software Developer Intern
-            </span>
-          </li>
-        </ul>
-      </div>
+        <div
+          ref={workRef}
+          className={`flex flex-col items-end w-full mb-24 transition-all duration-1000 ${
+            animationsPlayed.work
+              ? "opacity-100 translate-x-0"
+              : workInView
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 translate-x-full"
+          }`}
+        >
+          <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">
+            work experience
+          </h2>
+          <ul className="text-gruvbox-fg max-w-2xl space-y-4 text-right">
+            <li className="flex flex-col">
+              <span className="font-bold text-lg">Acculete</span>
+              <span className="text-gruvbox-fg text-sm mt-1">
+                Mobile App Developer
+              </span>
+            </li>
+            <li className="flex flex-col">
+              <span className="font-bold text-lg">Chargehub</span>
+              <span className="text-gruvbox-fg text-sm mt-1">
+                Software Developer Intern
+              </span>
+            </li>
+          </ul>
+        </div>
 
-      <div className="flex flex-col items-start justify-center h-[400px] w-full max-w-4xl mx-auto">
-        <h2 className="text-gruvbox-fg text-4xl font-bold mb-4">projects</h2>
-        <ul className="text-gruvbox-fg max-w-2xl">
-          <li>
-            <span className="font-bold">Cat Trader:</span>
-            <span className="text-gruvbox-fg text-sm font-normal">
-              Tinder-like cat swiping app
-            </span>
-          </li>
-          <li>
-            <span className="font-bold">Fantasy Survivors:</span>
-            <span className="text-gruvbox-fg text-sm font-normal">
-              Top-down bullet hell game
-            </span>
-          </li>
-          <li>
-            <span className="font-bold">Bananabank:</span>
-            <span className="text-gruvbox-fg text-sm font-normal">
-              .NET Maui application for managing personal finances
-            </span>
-          </li>
-          <li>
-            <span className="font-bold">Cropbox:</span>
-            <span className="text-gruvbox-fg text-sm font-normal">
-              Full stack android application for managing an automated green
-              house
-            </span>
-          </li>
-        </ul>
+        <div
+          ref={projectsRef}
+          className={`flex flex-col items-start w-full mb-24 transition-all duration-1000 ${
+            animationsPlayed.projects
+              ? "opacity-100 translate-x-0"
+              : projectsInView
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 -translate-x-full"
+          }`}
+        >
+          <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">projects</h2>
+          <ul className="text-gruvbox-fg max-w-2xl space-y-4">
+            <li className="flex flex-col">
+              <span className="font-bold text-lg">Cat Trader</span>
+              <span className="text-gruvbox-fg text-sm mt-1">
+                Tinder-like cat swiping app
+              </span>
+            </li>
+            <li className="flex flex-col">
+              <span className="font-bold text-lg">Fantasy Survivors</span>
+              <span className="text-gruvbox-fg text-sm mt-1">
+                Top-down bullet hell game
+              </span>
+            </li>
+            <li className="flex flex-col">
+              <span className="font-bold text-lg">Bananabank</span>
+              <span className="text-gruvbox-fg text-sm mt-1">
+                .NET Maui application for managing personal finances
+              </span>
+            </li>
+            <li className="flex flex-col">
+              <span className="font-bold text-lg">Cropbox</span>
+              <span className="text-gruvbox-fg text-sm mt-1">
+                Full stack android application for managing an automated green
+                house
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
       {/*
           models: use polypizza google models (?)

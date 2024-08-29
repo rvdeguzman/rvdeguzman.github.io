@@ -22,7 +22,8 @@ const config: Config = {
         },
       },
       backgroundColor: {
-        'gruvbox-bg': '#282828',
+        'gruvbox-bg': '#1d2021',
+        // 'gruvbox-bg': '#282828',
       },
     },
   },

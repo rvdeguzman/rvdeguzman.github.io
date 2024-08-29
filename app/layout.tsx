@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-gruvbox-bg text-gruvbox-fg">{children}</body>
+      <body className="bg-gruvbox-bg">{children}</body>
     </html>
   );
 }
