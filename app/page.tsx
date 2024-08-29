@@ -197,11 +197,11 @@ export default function Home() {
           </h2>
           <ul className="text-gruvbox-fg-dark max-w-2xl space-y-4 text-right w-full">
             <li className="flex flex-col">
-              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
+              <span className="font-bold text-lg text-gruvbox-aqua w-full break-words">
                 Mobile App Developer -{" "}
                 <a
                   href="https://acculete.com/"
-                  className="inline-flex items-center"
+                  className="inline-flex items-center text-gruvbox-blue hover:text-gruvbox-blue_light transition-colors duration-200"
                 >
                   Acculete Inc
                   <svg
@@ -221,19 +221,19 @@ export default function Home() {
                 </a>
               </span>
               <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
-                Building a cross platform mobile application to interface with
-                the Acculete device.
+                Cross platform mobile application to interface with Acculete
+                devices.
               </span>
               <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
                 Flutter • Dart • Firebase
               </span>
             </li>
             <li className="flex flex-col">
-              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
+              <span className="font-bold text-lg text-gruvbox-aqua w-full break-words">
                 Full-Stack Development Intern -{" "}
                 <a
                   href="https://chargehub.com/en/"
-                  className="inline-flex items-center"
+                  className="inline-flex items-center text-gruvbox-blue hover:text-gruvbox-blue_light transition-colors duration-200"
                 >
                   ChargeHub
                   <svg
@@ -280,8 +280,7 @@ export default function Home() {
                 StudyNoise
               </span>
               <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-normal">
-                A white noise application that allows users to layer different
-                sounds to create a custom study environment.
+                Ambient sound mixer for custom study environments
               </span>
               <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
                 Dart • Flutter • Firebase
@@ -289,7 +288,7 @@ export default function Home() {
             </li>
             <li className="flex flex-col">
               <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
-                Fantasy Survivors
+                Dungeon Survivors
               </span>
               <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
                 Bullet-hell game with a rogue-lite progression system
