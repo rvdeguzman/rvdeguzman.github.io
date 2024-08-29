@@ -21,6 +21,9 @@ const config: Config = {
           gray: '#a89984',
         },
       },
+      backgroundColor: {
+        'gruvbox-bg': '#282828',
+      },
     },
   },
   plugins: [],

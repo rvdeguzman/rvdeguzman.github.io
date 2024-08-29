@@ -23,8 +23,12 @@ const SpinningModel: React.FC = () => {
     sceneRef.current = scene;
     const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
     cameraRef.current = camera;
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true, // Enable alpha (transparency)
+    });
 
+    renderer.setClearColor(0x000000, 0); // Set clear color to transparent
     renderer.setSize(400, 400);
     mountRef.current.appendChild(renderer.domElement);
 
@@ -39,7 +43,7 @@ const SpinningModel: React.FC = () => {
       modelUrl,
       (gltf) => {
         const model = gltf.scene;
-        modelRef.current = model; // Store the model reference
+        modelRef.current = model;
         scene.add(model);
 
         // Center the model
@@ -52,7 +56,7 @@ const SpinningModel: React.FC = () => {
         const maxDim = Math.max(size.x, size.y, size.z);
         const fov = camera.fov * (Math.PI / 180);
         let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-        camera.position.z = cameraZ * 1.5; // Add some padding
+        camera.position.z = cameraZ * 1.5;
 
         camera.updateProjectionMatrix();
         console.log("Model loaded and positioned");
@@ -66,7 +70,7 @@ const SpinningModel: React.FC = () => {
     const animate = () => {
       requestAnimationFrame(animate);
       if (sceneRef.current && cameraRef.current && modelRef.current) {
-        modelRef.current.rotation.y += 0.0025; // Rotate the model
+        modelRef.current.rotation.y += 0.0025;
         renderer.render(sceneRef.current, cameraRef.current);
       }
     };
@@ -78,7 +82,7 @@ const SpinningModel: React.FC = () => {
     };
   }, []);
 
-  return <div ref={mountRef} />;
+  return <div ref={mountRef} style={{ background: "transparent" }} />;
 };
 
 export default SpinningModel;
