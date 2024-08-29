@@ -11,18 +11,18 @@ const SpinningModel = dynamic(() => import("../components/SpinningModel"), {
 });
 
 export default function Home() {
-  const [greeting, setGreeting] = useState("hi");
+  const [greeting, setGreeting] = useState("Hi");
 
   useEffect(() => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) {
-      setGreeting("good morning");
+      setGreeting("Good morning");
     } else if (hour >= 12 && hour < 18) {
-      setGreeting("good afternoon");
+      setGreeting("Good afternoon");
     } else if (hour >= 18 && hour < 22) {
-      setGreeting("good evening");
+      setGreeting("Good evening");
     } else {
-      setGreeting("hi");
+      setGreeting("Hello");
     }
   }, []);
 
@@ -78,15 +78,22 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col items-start justify-center h-[400px] w-full max-w-4xl mx-auto">
+      <div className="flex flex-col items-start justify-center h-[250px] w-full max-w-4xl mx-auto">
         <h1 className="text-gruvbox-fg text-4xl font-bold mb-4">
-          {greeting}, i'm rafael vincent
+          {greeting}, I'm Rafael Vincent,
         </h1>
-        <p className="text-gruvbox-fg max-w-2xl">
-          i am a computer science student at concordia university, with a
-          passion for software development. i am currently working as a mobile
-          developer.
+        <p className="text-gruvbox-fg-dark text-sm max-w-[50%] leading-relaxed mb-2">
+          Computer Science student at Concordia University interested in
+          applications of AI to solve real-world problems.
         </p>
+        <span className="text-gruvbox-fg-darker text-xs w-full break-words">
+          I am passionate about performance and learning how to build better
+          software.
+        </span>
+
+        <span className="text-gruvbox-fg-darker text-xs w-full break-words mt-2">
+          📷 • 🎸 • 🎮
+        </span>
       </div>
 
       <div className="flex flex-col items-start justify-center w-full max-w-4xl mx-auto">
@@ -100,22 +107,28 @@ export default function Home() {
               : "opacity-0 -translate-x-full"
           }`}
         >
-          <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">education</h2>
-          <ul className="text-gruvbox-fg max-w-2xl space-y-4">
+          <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">Education</h2>
+          <ul className="text-gruvbox-fg-dark max-w-2xl space-y-4 w-full">
             <li className="flex flex-col">
-              <span className="font-bold text-lg">
+              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
                 B.CompSc - Concordia University
               </span>
-              <span className="text-gruvbox-fg text-sm mt-1">
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
                 Computer Science
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs w-full break-words">
+                2023 - 2027
               </span>
             </li>
             <li className="flex flex-col">
-              <span className="font-bold text-lg">
+              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
                 DEC / Associate's Degree - John Abbott College
               </span>
-              <span className="text-gruvbox-fg text-sm mt-1">
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
                 Computer Science
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs w-full break-words">
+                2020 - 2023
               </span>
             </li>
           </ul>
@@ -132,19 +145,72 @@ export default function Home() {
           }`}
         >
           <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">
-            work experience
+            Work Experience
           </h2>
-          <ul className="text-gruvbox-fg max-w-2xl space-y-4 text-right">
+          <ul className="text-gruvbox-fg-dark max-w-2xl space-y-4 text-right w-full">
             <li className="flex flex-col">
-              <span className="font-bold text-lg">Acculete</span>
-              <span className="text-gruvbox-fg text-sm mt-1">
-                Mobile App Developer
+              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
+                Mobile App Developer -{" "}
+                <a
+                  href="https://acculete.com/"
+                  className="inline-flex items-center"
+                >
+                  Acculete Inc
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              </span>
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
+                Cross platform mobile application to interface with Acculete
+                devices.
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
+                {" "}
+                Flutter • Dart • Firebase
               </span>
             </li>
             <li className="flex flex-col">
-              <span className="font-bold text-lg">Chargehub</span>
-              <span className="text-gruvbox-fg text-sm mt-1">
-                Software Developer Intern
+              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
+                Full-Stack Development Intern -{" "}
+                <a
+                  href="https://chargehub.com/en/"
+                  className="inline-flex items-center"
+                >
+                  ChargeHub
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              </span>
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
+                Developed data-driven B2B products for EV charging
+                infrastructure.
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
+                JS • Node • Vue • Firebase • ReTool • MSSQL • MongoDB
               </span>
             </li>
           </ul>
@@ -160,31 +226,51 @@ export default function Home() {
               : "opacity-0 -translate-x-full"
           }`}
         >
-          <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">projects</h2>
-          <ul className="text-gruvbox-fg max-w-2xl space-y-4">
+          <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">Projects</h2>
+          <ul className="text-gruvbox-fg-dark max-w-2xl space-y-4 w-full">
             <li className="flex flex-col">
-              <span className="font-bold text-lg">Cat Trader</span>
-              <span className="text-gruvbox-fg text-sm mt-1">
-                Tinder-like cat swiping app
+              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
+                StudyNoise
+              </span>
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-normal">
+                Ambient sound mixer for customized study environments
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
+                Dart • Flutter • Firebase
               </span>
             </li>
             <li className="flex flex-col">
-              <span className="font-bold text-lg">Fantasy Survivors</span>
-              <span className="text-gruvbox-fg text-sm mt-1">
-                Top-down bullet hell game
+              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
+                Fantasy Survivors
+              </span>
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
+                Bullet-hell game with a rogue-lite progression system
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
+                {" "}
+                TS • Phaser
               </span>
             </li>
             <li className="flex flex-col">
-              <span className="font-bold text-lg">Bananabank</span>
-              <span className="text-gruvbox-fg text-sm mt-1">
-                .NET Maui application for managing personal finances
+              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
+                Bananabank
+              </span>
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
+                Windows application for managing personal finances.
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
+                .NET • MAUI • SQLite
               </span>
             </li>
             <li className="flex flex-col">
-              <span className="font-bold text-lg">Cropbox</span>
-              <span className="text-gruvbox-fg text-sm mt-1">
-                Full stack android application for managing an automated green
-                house
+              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
+                Cropbox
+              </span>
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
+                Mobile greenhouse automation and monitoring system.
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
+                Azure • Python • C# • SQLite • Raspberry Pi
               </span>
             </li>
           </ul>

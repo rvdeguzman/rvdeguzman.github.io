@@ -12,6 +12,8 @@ const config: Config = {
         gruvbox: {
           bg: '#282828',
           fg: '#ebdbb2',
+          'fg-dark': '#d5c4a1',  // Darker shade for regular text
+          'fg-darker': '#bdae93', // Even darker shade for smaller text
           red: '#cc241d',
           green: '#98971a',
           yellow: '#d79921',
@@ -22,8 +24,7 @@ const config: Config = {
         },
       },
       backgroundColor: {
-        'gruvbox-bg': '#1d2021',
-        // 'gruvbox-bg': '#282828',
+        'gruvbox-bg': '#080808',
       },
     },
   },
