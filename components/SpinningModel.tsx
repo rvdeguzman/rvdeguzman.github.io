@@ -6,7 +6,7 @@ import React, { useEffect, useRef } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "three";
 
-const modelUrl = "/models/construction_sign.glb";
+const modelUrl = "./models/construction_sign.glb";
 
 const loader = new GLTFLoader();
 
