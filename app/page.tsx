@@ -108,7 +108,7 @@ export default function Home() {
         {/* LinkedIn and GitHub icons */}
         <div className="flex space-x-2 mt-4">
           <a
-            href="https://www.linkedin.com/in/your-linkedin-profile"
+            href="https://www.linkedin.com/in/rafdeguzman/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gruvbox-fg hover:text-gruvbox-blue transition-colors duration-200"
@@ -123,7 +123,7 @@ export default function Home() {
             </svg>
           </a>
           <a
-            href="https://github.com/your-github-username"
+            href="https://github.com/rafdeguzman"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gruvbox-fg hover:text-gruvbox-purple transition-colors duration-200"
