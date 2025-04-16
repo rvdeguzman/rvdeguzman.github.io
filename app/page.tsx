@@ -102,7 +102,7 @@ export default function Home() {
           applications of AI to solve real-world problems.
         </p>
         <span className="text-gruvbox-fg-darker text-xs w-full break-words">
-          I am passionate about performance and learning how to build better
+          I am passionate about learning how to build better
           software.
         </span>
 
@@ -125,7 +125,7 @@ export default function Home() {
             <FaGithub size={24} />
           </a>
           <a
-            href="/DeGuzmanCV.pdf"
+            href="/rvdeguzman_cv.pdf"
             className="text-gruvbox-fg hover:text-gruvbox-aqua transition-colors duration-300"
             target="_blank"
             rel="noopener noreferrer"
@@ -139,13 +139,12 @@ export default function Home() {
       <div className="flex flex-col items-start justify-center w-full max-w-4xl mx-auto">
         <div
           ref={educationRef}
-          className={`flex flex-col items-start w-full mb-24 transition-all duration-1000 ${
-            animationsPlayed.education
-              ? "opacity-100 translate-x-0"
-              : educationInView
+          className={`flex flex-col items-start w-full mb-24 transition-all duration-1000 ${animationsPlayed.education
+            ? "opacity-100 translate-x-0"
+            : educationInView
               ? "opacity-100 translate-x-0"
               : "opacity-0 -translate-x-full"
-          }`}
+            }`}
         >
           <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">Education</h2>
           <ul className="text-gruvbox-fg-dark max-w-2xl space-y-4 w-full">
@@ -154,7 +153,7 @@ export default function Home() {
                 B.CompSc - Concordia University
               </span>
               <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
-                Computer Science
+                Co-Op Computer Science
               </span>
               <span className="text-gruvbox-fg-darker text-xs w-full break-words">
                 2023 - 2027
@@ -176,13 +175,12 @@ export default function Home() {
 
         <div
           ref={workRef}
-          className={`flex flex-col items-end w-full mb-24 transition-all duration-1000 ${
-            animationsPlayed.work
-              ? "opacity-100 translate-x-0"
-              : workInView
+          className={`flex flex-col items-end w-full mb-24 transition-all duration-1000 ${animationsPlayed.work
+            ? "opacity-100 translate-x-0"
+            : workInView
               ? "opacity-100 translate-x-0"
               : "opacity-0 translate-x-full"
-          }`}
+            }`}
         >
           <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">
             Work Experience
@@ -190,12 +188,12 @@ export default function Home() {
           <ul className="text-gruvbox-fg-dark max-w-2xl space-y-4 text-right w-full">
             <li className="flex flex-col">
               <span className="font-bold text-lg text-gruvbox-aqua w-full break-words">
-                Mobile App Developer -{" "}
+                Full Stack Developer AI Research Intern -{" "}
                 <a
-                  href="https://acculete.com/"
-                  className="inline-flex items-center text-gruvbox-blue hover:text-gruvbox-blue_light transition-colors duration-200"
+                  href="https://www.umontreal.com/"
+                  className="inline-flex items-center text-gruvbox-blue hover:text-gruvbox-blue_light transition-colors duration-199"
                 >
-                  Acculete Inc
+                  Université de Montréal
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 ml-1"
@@ -213,7 +211,38 @@ export default function Home() {
                 </a>
               </span>
               <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
-                Cross platform mobile application to interface with Acculete
+                Leveraging LLMs for AI Tutoring.
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
+                React • Python • Docker
+              </span>
+            </li>
+            <li className="flex flex-col">
+              <span className="font-bold text-lg text-gruvbox-aqua w-full break-words">
+                Mobile App Developer -{" "}
+                <a
+                  href="https://acculete.com/"
+                  className="inline-flex items-center text-gruvbox-blue hover:text-gruvbox-blue_light transition-colors duration-199"
+                >
+                  Stealth (Health Startup)
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              </span>
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-words">
+                Cross platform mobile application to interface with custom BLE
                 devices.
               </span>
               <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
@@ -257,22 +286,32 @@ export default function Home() {
 
         <div
           ref={projectsRef}
-          className={`flex flex-col items-start w-full mb-24 transition-all duration-1000 ${
-            animationsPlayed.projects
-              ? "opacity-100 translate-x-0"
-              : projectsInView
+          className={`flex flex-col items-start w-full mb-24 transition-all duration-1000 ${animationsPlayed.projects
+            ? "opacity-100 translate-x-0"
+            : projectsInView
               ? "opacity-100 translate-x-0"
               : "opacity-0 -translate-x-full"
-          }`}
+            }`}
         >
           <h2 className="text-gruvbox-fg text-4xl font-bold mb-6">Projects</h2>
           <ul className="text-gruvbox-fg-dark max-w-2xl space-y-4 w-full">
             <li className="flex flex-col">
               <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
+                ElementalTD
+              </span>
+              <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-normal">
+                Tower Defense game with implementations of C++ patterns.
+              </span>
+              <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
+                C++ • Raylib
+              </span>
+            </li>
+            <li className="flex flex-col">
+              <span className="font-bold text-lg text-gruvbox-fg w-full break-words">
                 StudyNoise
               </span>
               <span className="text-gruvbox-fg-dark text-sm mt-1 w-full break-normal">
-                Ambient sound mixer for custom study environments
+                Ambient sound mixer for custom study soundscapes
               </span>
               <span className="text-gruvbox-fg-darker text-xs mt-1 w-full break-words">
                 Dart • Flutter • Firebase
