@@ -44,25 +44,27 @@ const PixelShader = {
 };
 
 const SpinningModel = () => {
-  const mountRef = useRef(null);
-  const sceneRef = useRef(null);
-  const cameraRef = useRef(null);
-  const modelRef = useRef(null);
-  const composerRef = useRef(null);
-  const rendererRef = useRef(null);
+  // Explicitly type all refs
+  const mountRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const modelRef = useRef<THREE.Object3D | null>(null);
+  const composerRef = useRef<EffectComposer | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
   // Mouse interaction state
-  const mouseDownRef = useRef(false);
-  const previousMousePositionRef = useRef({ x: 0, y: 0 });
-  const velocityRef = useRef({ x: 0, y: 0 });
-  const momentumRef = useRef({ x: 0, y: 0 });
-  const lastInteractionTimeRef = useRef(0);
-  const interactingRef = useRef(false);
-  const damping = 0.95; // Controls how quickly momentum slows down
+  const mouseDownRef = useRef<boolean>(false);
+  const previousMousePositionRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
+  const velocityRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
+  const momentumRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
+  const lastInteractionTimeRef = useRef<number>(0);
+  const interactingRef = useRef<boolean>(false);
+  const damping = 0.95;
   const defaultRotationSpeed = 0.0025; // Original rotation speed
-  const inactivityThreshold = 2000; // Time in ms before returning to default rotation
+  const inactivityThreshold = 0.350; // Time in ms before returning to default rotation
 
   useEffect(() => {
+    // Critical null check - TypeScript needs this
     if (!mountRef.current) return;
 
     // Set up scene
@@ -81,7 +83,12 @@ const SpinningModel = () => {
     rendererRef.current = renderer;
     renderer.setClearColor(0x080808, 1); // Set explicit background color to #080808
     renderer.setSize(400, 400);
-    mountRef.current.appendChild(renderer.domElement);
+
+    // Use safe DOM manipulation with null check
+    const mountElement = mountRef.current;
+    if (mountElement) {
+      mountElement.appendChild(renderer.domElement);
+    }
 
     // Enhance lighting for better model definition
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
@@ -127,8 +134,6 @@ const SpinningModel = () => {
         let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
         camera.position.z = cameraZ * 1.75;
         camera.updateProjectionMatrix();
-
-        console.log("Model loaded and positioned");
       },
       undefined,
       (error) => {
@@ -137,7 +142,7 @@ const SpinningModel = () => {
     );
 
     // Mouse event handlers
-    const handleMouseDown = (e) => {
+    const handleMouseDown = (e: MouseEvent) => {
       mouseDownRef.current = true;
       interactingRef.current = true;
       previousMousePositionRef.current.x = e.clientX;
@@ -146,7 +151,7 @@ const SpinningModel = () => {
       momentumRef.current = { x: 0, y: 0 };
     };
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (!mouseDownRef.current) return;
 
       const deltaX = e.clientX - previousMousePositionRef.current.x;
@@ -183,16 +188,22 @@ const SpinningModel = () => {
       mouseDownRef.current = false;
     };
 
-    // Add event listeners to the renderer DOM element
-    renderer.domElement.addEventListener('mousedown', handleMouseDown);
+    // Safe event listener attachment with null checks
+    const rendererDomElement = renderer.domElement;
+    if (rendererDomElement) {
+      rendererDomElement.addEventListener('mousedown', handleMouseDown);
+      rendererDomElement.addEventListener('mouseleave', handleMouseLeave);
+    }
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
-    renderer.domElement.addEventListener('mouseleave', handleMouseLeave);
 
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
-      if (sceneRef.current && cameraRef.current && modelRef.current && composerRef.current) {
+      if (sceneRef.current &&
+        cameraRef.current &&
+        modelRef.current &&
+        composerRef.current) {
         const currentTime = Date.now();
         const timeSinceLastInteraction = currentTime - lastInteractionTimeRef.current;
 
@@ -216,26 +227,31 @@ const SpinningModel = () => {
           modelRef.current.rotation.y += defaultRotationSpeed;
         }
 
-        // Use composer instead of renderer to apply the ASCII effect
+        // Use composer instead of renderer to apply the pixelation effect
         composerRef.current.render();
       }
     };
 
     animate();
 
-    // Cleanup
+    // Cleanup with null checks
     return () => {
-      if (mountRef.current && rendererRef.current) {
-        mountRef.current.removeChild(rendererRef.current.domElement);
+      // Safe cleanup for DOM elements
+      const mount = mountRef.current;
+      const renderer = rendererRef.current;
+      if (mount && renderer && renderer.domElement) {
+        if (mount.contains(renderer.domElement)) {
+          mount.removeChild(renderer.domElement);
+        }
       }
 
-      // Remove event listeners
-      if (rendererRef.current && rendererRef.current.domElement) {
-        rendererRef.current.domElement.removeEventListener('mousedown', handleMouseDown);
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-        rendererRef.current.domElement.removeEventListener('mouseleave', handleMouseLeave);
+      // Remove event listeners safely
+      if (renderer && renderer.domElement) {
+        renderer.domElement.removeEventListener('mousedown', handleMouseDown);
+        renderer.domElement.removeEventListener('mouseleave', handleMouseLeave);
       }
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
     };
   }, []);
 
