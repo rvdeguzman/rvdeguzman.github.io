@@ -1,11 +1,11 @@
 ---
-title: "Lorem ipsum"
+title: "Lorem Ipsum"
 description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 date: "2024-02-28"
-color: "green"
+color: "#7e98e8"
 ---
 
-# Lorem ipsum
+# Lorem Ipsum
 
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 

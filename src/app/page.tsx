@@ -24,9 +24,10 @@ export default function Home() {
                         <h2 className="text-2xl font-semibold mb-4">Latest Posts</h2>
                         <div className="space-y-4">
                             {posts.map((post, idx) => (
-                                <article key={idx} className={`border-l-4 border-${post.color}-500 pl-4`}>
+                                <article key={idx} className="border-l-4 border-gray-200 dark:border-gray-700 pl-4 group"
+                                         style={{ '--hover-color': post.color } as React.CSSProperties}>
                                     <h3 className="text-lg font-medium mb-2">
-                                        <a href={`/posts/${post.slug}`} className={`hover:text-${post.color}-600 transition-colors`}>
+                                        <a href={`/posts/${post.slug}`} className="text-gray-900 dark:text-gray-100 transition-colors group-hover:text-[var(--hover-color)]">
                                             {post.title}
                                         </a>
                                     </h3>

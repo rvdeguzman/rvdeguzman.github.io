@@ -56,8 +56,8 @@ const Header = () => {
 
     return (
         <div className="w-full flex flex-col justify-center px-8">
-            <nav className="flex items-center justify-between w-full max-w-2xl mx-auto pt-8 pb-8 sm:pb-16">
-                <div className="relative flex gap-6">
+            <nav className="flex items-center justify-between w-full max-w-2xl mx-auto pt-4 pb-2 sm:pb-4">
+                <div className="relative flex gap-4">
                     {tabsData.map((tab, idx) => (
                         <Link
                             key={idx}
