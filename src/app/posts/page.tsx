@@ -1,16 +1,17 @@
 import Header from "../header";
-import { postsData } from "../../data/posts";
+import { getAllPosts } from "../../lib/posts";
 
 export default function Posts() {
+    const posts = getAllPosts();
     return (
         <div className="min-h-screen">
             <Header />
             <main className="max-w-2xl mx-auto px-8 py-8">
                 <h1 className="text-2xl font-semibold mb-8">Posts</h1>
                 <div className="space-y-6">
-                    {postsData.map((post, idx) => (
+                    {posts.map((post, idx) => (
                         <article key={idx} className="group">
-                            <a href={post.href} className="block">
+                            <a href={`/posts/${post.slug}`} className="block">
                                 <h2 className="text-lg font-medium group-hover:text-gray-600 transition-colors duration-200">
                                     {post.title}
                                 </h2>

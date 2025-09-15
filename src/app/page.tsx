@@ -1,7 +1,10 @@
 import Header from "./header";
-import { postsData } from "../data/posts";
+import { getAllPosts } from "../lib/posts";
+import { getAllProjects } from "../lib/projects";
 
 export default function Home() {
+    const posts = getAllPosts();
+    const projects = getAllProjects();
     return (
         <div className="min-h-screen">
             <Header />
@@ -20,10 +23,10 @@ export default function Home() {
                     <section>
                         <h2 className="text-2xl font-semibold mb-4">Latest Posts</h2>
                         <div className="space-y-4">
-                            {postsData.map((post, idx) => (
+                            {posts.map((post, idx) => (
                                 <article key={idx} className={`border-l-4 border-${post.color}-500 pl-4`}>
                                     <h3 className="text-lg font-medium mb-2">
-                                        <a href={post.href} className={`hover:text-${post.color}-600 transition-colors`}>
+                                        <a href={`/posts/${post.slug}`} className={`hover:text-${post.color}-600 transition-colors`}>
                                             {post.title}
                                         </a>
                                     </h3>
@@ -37,31 +40,23 @@ export default function Home() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold mb-4">Recent Projects</h2>
+                        <h2 className="text-2xl font-semibold mb-4">Projects</h2>
                         <div className="grid gap-4 md:grid-cols-2">
-                            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                                <h3 className="font-medium mb-2">Task Management App</h3>
-                                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                                    A React-based productivity app with drag-and-drop functionality
-                                    and real-time collaboration features.
-                                </p>
-                                <div className="flex gap-2 text-xs">
-                                    <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">React</span>
-                                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded">Node.js</span>
+                            {projects.map((project, idx) => (
+                                <div key={idx} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                    <h3 className="font-medium mb-2">{project.title}</h3>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        {project.description}
+                                    </p>
+                                    <div className="flex gap-2 text-xs">
+                                        {project.tags.map((tag, tagIdx) => (
+                                            <span key={tagIdx} className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                                <h3 className="font-medium mb-2">Weather Dashboard</h3>
-                                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                                    Clean and minimal weather app with location-based forecasts
-                                    and beautiful data visualizations.
-                                </p>
-                                <div className="flex gap-2 text-xs">
-                                    <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded">Vue.js</span>
-                                    <span className="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded">API</span>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </section>
                 </div>
