@@ -7,8 +7,8 @@ export default function Posts() {
         <div className="min-h-screen">
             <Header />
             <main className="max-w-2xl mx-auto px-8 py-8">
-                <h1 className="text-3xl font-semibold mb-8">Posts</h1>
-                <div className="space-y-8">
+                <h1 className="text-3xl font-bold mb-4">Posts</h1>
+                <div className="space-y-4">
                     {posts.map((post, idx) => (
                         <article key={idx} className="group">
                             <a href={`/posts/${post.slug}`} className="block">

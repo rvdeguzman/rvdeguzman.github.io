@@ -5,7 +5,7 @@ export default function Misc() {
         <div className="min-h-screen">
             <Header />
             <main className="max-w-2xl mx-auto px-8 py-8">
-                <h1 className="text-2xl font-semibold mb-8">Misc</h1>
+                <h1 className="text-3xl font-bold mb-4">Misc</h1>
                 <div className="space-y-8">
                     <section>
                         <h2 className="text-lg font-medium mb-4">Lorem Ipsum</h2>
