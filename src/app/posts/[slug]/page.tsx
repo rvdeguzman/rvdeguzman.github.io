@@ -3,9 +3,9 @@ import { getPost, getAllPosts } from "../../../lib/posts";
 import { notFound } from "next/navigation";
 
 interface PostPageProps {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
 export function generateStaticParams() {
@@ -15,8 +15,9 @@ export function generateStaticParams() {
     }));
 }
 
-export default function PostPage({ params }: PostPageProps) {
-    const post = getPost(params.slug);
+export default async function PostPage({ params }: PostPageProps) {
+    const { slug } = await params;
+    const post = getPost(slug);
 
     if (!post) {
         notFound();
@@ -32,7 +33,15 @@ export default function PostPage({ params }: PostPageProps) {
 
                     <div
                         className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />').replace(/## (.*)/g, '<h2 class="text-xl font-semibold mt-8 mb-4">$1</h2>').replace(/# (.*)/g, '<h1 class="text-2xl font-bold mt-8 mb-4">$1</h1>') }}
+                        dangerouslySetInnerHTML={{
+                            __html: post.content
+                                .replace(/^## (.*)$/gm, '<h2 class="text-xl font-semibold mt-8 mb-4">$1</h2>')
+                                .replace(/^# (.*)$/gm, '<h1 class="text-2xl font-bold mt-8 mb-4">$1</h1>')
+                                .replace(/\n\n/g, '</p><p class="mb-4">')
+                                .replace(/^(.*)$/gm, '<p class="mb-4">$1</p>')
+                                .replace(/<p class="mb-4"><h/g, '<h')
+                                .replace(/h><\/p>/g, 'h>')
+                        }}
                     />
                 </article>
             </main>
