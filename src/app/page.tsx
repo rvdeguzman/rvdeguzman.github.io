@@ -1,4 +1,5 @@
 import Header from "./header";
+import { postsData } from "../data/posts";
 
 export default function Home() {
     return (
@@ -18,44 +19,19 @@ export default function Home() {
                     <section>
                         <h2 className="text-2xl font-semibold mb-4">Latest Posts</h2>
                         <div className="space-y-4">
-                            <article className="border-l-4 border-amber-500 pl-4">
-                                <h3 className="text-lg font-medium mb-2">
-                                    <a href="/posts/getting-started-with-nextjs" className="hover:text-amber-600 transition-colors">
-                                        Getting Started with Next.js 14
-                                    </a>
-                                </h3>
-                                <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                                    A comprehensive guide to building modern web applications with Next.js,
-                                    covering the latest features and best practices.
-                                </p>
-                                <time className="text-xs text-gray-500">March 15, 2024</time>
-                            </article>
-
-                            <article className="border-l-4 border-blue-500 pl-4">
-                                <h3 className="text-lg font-medium mb-2">
-                                    <a href="/posts/typescript-tips" className="hover:text-blue-600 transition-colors">
-                                        TypeScript Tips for Better Code
-                                    </a>
-                                </h3>
-                                <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                                    Essential TypeScript patterns and techniques that will make your code
-                                    more maintainable and type-safe.
-                                </p>
-                                <time className="text-xs text-gray-500">March 8, 2024</time>
-                            </article>
-
-                            <article className="border-l-4 border-green-500 pl-4">
-                                <h3 className="text-lg font-medium mb-2">
-                                    <a href="/posts/css-grid-mastery" className="hover:text-green-600 transition-colors">
-                                        Mastering CSS Grid Layout
-                                    </a>
-                                </h3>
-                                <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                                    Deep dive into CSS Grid with practical examples and real-world
-                                    use cases for creating responsive layouts.
-                                </p>
-                                <time className="text-xs text-gray-500">February 28, 2024</time>
-                            </article>
+                            {postsData.map((post, idx) => (
+                                <article key={idx} className={`border-l-4 border-${post.color}-500 pl-4`}>
+                                    <h3 className="text-lg font-medium mb-2">
+                                        <a href={post.href} className={`hover:text-${post.color}-600 transition-colors`}>
+                                            {post.title}
+                                        </a>
+                                    </h3>
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+                                        {post.description}
+                                    </p>
+                                    <time className="text-xs text-gray-500">{post.date}</time>
+                                </article>
+                            ))}
                         </div>
                     </section>
 
