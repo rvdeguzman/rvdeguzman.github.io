@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
@@ -64,12 +63,16 @@ const Header = () => {
                             key={idx}
                             href={tab.href}
                             className="relative px-3 py-2 text-gray-400 transition-colors duration-200"
-                            style={{ color: hoveredTab === idx || getCurrentTabIndex() === idx ? 'var(--accent1)' : undefined }}
+                            style={{
+                                color: hoveredTab === idx || getCurrentTabIndex() === idx ? 'var(--accent1)' : undefined,
+                                fontWeight: getCurrentTabIndex() === idx ? 'bold' : undefined,
+                                textDecoration: getCurrentTabIndex() === idx ? 'underline' : undefined
+                            }}
                             onMouseEnter={() => setHoveredTab(idx)}
                             onMouseLeave={() => setHoveredTab(null)}
                         >
                             {tab.label}
-                            {(hoveredTab === idx || getCurrentTabIndex() === idx) && (
+                            {hoveredTab === idx && (
                                 <span className="absolute inset-0 transition-all duration-500 -z-10" style={{ backgroundColor: 'var(--bg-hover)' }} />
                             )}
                         </Link>
