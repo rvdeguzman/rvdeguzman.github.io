@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -10,16 +10,16 @@ const tabsData = [
 ];
 
 const Header = () => {
-    const [hoveredTab, setHoveredTab] = useState(null);
+    const [hoveredTab, setHoveredTab] = useState<number | null>(null);
     const router = useRouter();
     const pathname = usePathname();
 
-    const getCurrentTabIndex = () => {
+    const getCurrentTabIndex = useCallback(() => {
         return tabsData.findIndex(tab => tab.href === pathname);
-    };
+    }, [pathname]);
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (document.activeElement?.tagName === 'INPUT' ||
                 document.activeElement?.tagName === 'TEXTAREA') {
                 return;
@@ -52,7 +52,7 @@ const Header = () => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [router, pathname]);
+    }, [router, pathname, getCurrentTabIndex]);
 
     return (
         <div className="w-full flex flex-col justify-center px-8">

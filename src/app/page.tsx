@@ -1,13 +1,16 @@
 import Header from "./header";
 import { getAllPosts } from "../lib/posts";
 import { getAllProjects } from "../lib/projects";
+import TorusKnotWrapper from "./components/TorusKnotWrapper";
 
 export default function Home() {
     const posts = getAllPosts();
     const projects = getAllProjects();
+    
     return (
         <div className="min-h-screen">
             <Header />
+            <TorusKnotWrapper />
             <main className="max-w-2xl mx-auto px-8 py-8">
                 <div className="space-y-8">
                     <section>
@@ -25,7 +28,7 @@ export default function Home() {
                         <div className="space-y-4">
                             {posts.map((post, idx) => (
                                 <article key={idx} className="border-l-4 border-gray-200 dark:border-gray-700 pl-4 group"
-                                         style={{ '--hover-color': post.color } as React.CSSProperties}>
+                                    style={{ '--hover-color': post.color } as React.CSSProperties}>
                                     <h3 className="text-lg font-medium mb-2">
                                         <a href={`/posts/${post.slug}`} className="text-gray-900 dark:text-gray-100 transition-colors group-hover:text-[var(--hover-color)]">
                                             {post.title}
