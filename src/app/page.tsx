@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <div className="min-h-screen">
             <Header />
-            <main className="max-w-2xl mx-auto px-8 py-8">
+            <main className="max-w-2xl mx-auto px-8 py-8 pt-0">
                 <div className="space-y-8">
                     { /* about me */}
                     <section>

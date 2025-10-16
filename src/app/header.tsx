@@ -19,7 +19,7 @@ const Header = () => {
     };
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
+        const handleKeyDown = (e: any) => {
             if (document.activeElement?.tagName === 'INPUT' ||
                 document.activeElement?.tagName === 'TEXTAREA') {
                 return;
@@ -56,13 +56,13 @@ const Header = () => {
 
     return (
         <div className="w-full flex flex-col justify-center px-8">
-            <nav className="flex items-center justify-between w-full max-w-2xl mx-auto pt-4 pb-2 sm:pb-4">
+            <nav className="flex items-center justify-between w-full max-w-2xl mx-auto px-8 py-8">
                 <div className="relative flex gap-4">
                     {tabsData.map((tab, idx) => (
                         <Link
                             key={idx}
                             href={tab.href}
-                            className="relative px-3 py-2 text-gray-400 transition-colors duration-200"
+                            className="relative text-gray-400 transition-colors duration-200"
                             style={{
                                 color: hoveredTab === idx || getCurrentTabIndex() === idx ? 'var(--accent1)' : undefined,
                                 fontWeight: getCurrentTabIndex() === idx ? 'bold' : undefined,
@@ -73,13 +73,13 @@ const Header = () => {
                         >
                             {tab.label}
                             {hoveredTab === idx && (
-                                <span className="absolute inset-0 transition-all duration-500 -z-10" style={{ backgroundColor: 'var(--bg-hover)' }} />
+                                <span className="absolute inset-0 transition-all duration-500 -z-10" />
                             )}
                         </Link>
                     ))}
                 </div>
             </nav>
-        </div>
+        </div >
     );
 };
 
