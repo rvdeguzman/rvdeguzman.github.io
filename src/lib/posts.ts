@@ -13,7 +13,7 @@ export interface Post {
     content: string;
 }
 
-export function getAllPosts(): Post[] {
+export function getPosts(): Post[] {
     if (!fs.existsSync(postsDirectory)) {
         return [];
     }

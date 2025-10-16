@@ -1,8 +1,8 @@
 import Header from "../header";
-import { getAllPosts } from "../../lib/posts";
+import { getPosts } from "../../lib/posts";
 
 export default function Posts() {
-    const posts = getAllPosts();
+    const posts = getPosts();
     return (
         <div className="min-h-screen">
             <Header />

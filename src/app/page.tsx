@@ -1,15 +1,18 @@
 import Header from "./header";
-import { getAllPosts } from "../lib/posts";
-import { getAllProjects } from "../lib/projects";
+import { getPosts } from "../lib/posts";
+import { getProjects } from "../lib/projects";
 
 export default function Home() {
-    const posts = getAllPosts();
-    const projects = getAllProjects();
+    // const about = getAbout();
+    // const experiences = getExperiences();
+    const posts = getPosts();
+    const projects = getProjects();
     return (
         <div className="min-h-screen">
             <Header />
             <main className="max-w-2xl mx-auto px-8 py-8">
                 <div className="space-y-8">
+                    { /* about me */}
                     <section>
                         <h1 className="text-3xl font-bold mb-4">Lorem Ipsum</h1>
                         <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -20,26 +23,39 @@ export default function Home() {
                         </p>
                     </section>
 
+                    { /* experiences */}
                     <section>
-                        <h2 className="text-2xl font-semibold mb-4">Latest Posts</h2>
-                        <div className="space-y-4">
-                            {posts.map((post, idx) => (
-                                <article key={idx} className="border-l-4 border-gray-200 dark:border-gray-700 pl-4 group"
-                                         style={{ '--hover-color': post.color } as React.CSSProperties}>
-                                    <h3 className="text-lg font-medium mb-2">
-                                        <a href={`/posts/${post.slug}`} className="text-gray-900 dark:text-gray-100 transition-colors group-hover:text-[var(--hover-color)]">
-                                            {post.title}
-                                        </a>
-                                    </h3>
-                                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                                        {post.description}
-                                    </p>
-                                    <time className="text-xs text-gray-500">{post.date}</time>
-                                </article>
-                            ))}
-                        </div>
                     </section>
 
+                    { /* posts */}
+                    <section>
+                        <h2 className="text-2xl font-semibold mb-4">Latest Posts</h2>
+                        {posts.length === 0 ? (
+                            <p className="text-gray-600 dark:text-gray-400">No posts available.</p>
+                        ) : (
+                            <div className="space-y-4">
+                                { /* get the 3 most recent posts */}
+                                {
+                                    posts.slice(0, 3).map((post, idx) => (
+                                        <article key={idx} className="border-l-4 border-gray-200 dark:border-gray-700 pl-4 group"
+                                            style={{ '--hover-color': post.color } as React.CSSProperties}>
+                                            <h3 className="text-lg font-medium mb-2">
+                                                <a href={`/posts/${post.slug}`} className="text-gray-900 dark:text-gray-100 transition-colors group-hover:text-[var(--hover-color)]">
+                                                    {post.title}
+                                                </a>
+                                            </h3>
+                                            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+                                                {post.description}
+                                            </p>
+                                            <time className="text-xs text-gray-500">{post.date}</time>
+                                        </article>
+                                    ))
+                                }
+                            </div>
+                        )}
+                    </section>
+
+                    { /* projects */}
                     <section>
                         <h2 className="text-2xl font-semibold mb-4">Projects</h2>
                         <div className="grid gap-4 md:grid-cols-2">
@@ -60,6 +76,20 @@ export default function Home() {
                             ))}
                         </div>
                     </section>
+
+                    {/* footer */}
+                    <div className="pt-8 mt-8 border-t border-gray-200 dark:border-gray-700" />
+                    <div className="flex justify-left">
+                        { /* 
+                            <img
+                                src="/conu.gif"
+                                alt="Concordia University"
+                                className="w-22 h-8"
+                                width={88}
+                                height={31}
+                            />
+                            */}
+                    </div>
                 </div>
             </main>
         </div>
