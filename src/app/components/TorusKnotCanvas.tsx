@@ -3,7 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import { AsciiRenderer, OrbitControls } from "@react-three/drei";
 import { useState, useEffect } from "react";
-import ModelLoader from "./ModelLoader";
+
 import TextToModel from "./TextToModel";
 
 export default function TorusKnotCanvas() {
@@ -24,11 +24,9 @@ export default function TorusKnotCanvas() {
 
     return (
         <div className="w-full max-w-2xl mx-auto">
-            <div className="mb-4 text-center">
-            </div>
-            <div className="h-80">
+            <div className="w-80 h-80 mx-auto">
                 <Canvas camera={{
-                    fov: 75,
+                    fov: 35,
                     position: [0, 0, 6],
                     near: 0.1,
                     far: 1000
@@ -40,9 +38,9 @@ export default function TorusKnotCanvas() {
                     <AsciiRenderer
                         bgColor="transparent"
                         characters=" .:-+*=%@#"
-                        resolution={0.5}
+                        resolution={0.2}
                     />
-                    <OrbitControls enableZoom={false} minDistance={2} maxDistance={2} />
+                    <OrbitControls enableZoom={false} minDistance={3.5} maxDistance={3.5} />
                 </Canvas>
             </div>
         </div >
