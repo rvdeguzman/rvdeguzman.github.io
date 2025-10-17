@@ -1,8 +1,10 @@
 ---
-title: "Weather Dashboard"
-description: "Clean and minimal weather app with location-based forecasts and beautiful data visualizations."
-tags: ["Vue.js", "API"]
+title: "raycaster"
+description: "raycaster lodev implemented in C"
+tags: ["C", "raylib"]
 featured: true
+url: "https://github.com/rvdeguzman/raycaster"
+color: "#fbcb97"
 ---
 
 # Weather Dashboard

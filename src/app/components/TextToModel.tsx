@@ -65,7 +65,7 @@ function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, rotat
                     bevelThickness={0.02}
                     bevelSize={0.02}
                     bevelSegments={5}
-                    position={[0, 0, 0.01]}
+                    position={[0, 0.08, 0]}
                 >
                     {text}
                     <meshStandardMaterial />

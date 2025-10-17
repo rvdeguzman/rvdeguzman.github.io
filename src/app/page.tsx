@@ -1,6 +1,7 @@
 import Header from "./header";
 import TextModelWrapper from "./components/TextModelWrapper";
 import Separator from "./components/Separator";
+import ProjectCard from "./components/ProjectCard";
 import { getPosts } from "../lib/posts";
 import { getProjects } from "../lib/projects";
 import { getAbout } from "../lib/about";
@@ -38,7 +39,7 @@ export default function Home() {
                                 <>
                                     <h1 className="text-3xl font-bold mb-4">About Me</h1>
                                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                        Loading...
+                                        ...
                                     </p>
                                 </>
                             )}
@@ -149,26 +150,7 @@ export default function Home() {
                     <Separator />
 
                     {/* projects */}
-                    <section>
-                        <h2 className="text-2xl font-semibold mb-4">Projects</h2>
-                        <div className="grid gap-4 md:grid-cols-2">
-                            {projects.map((project, idx) => (
-                                <div key={idx} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg text-justify">
-                                    <h3 className="font-medium mb-2">{project.title}</h3>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                                        {project.description}
-                                    </p>
-                                    <div className="flex gap-2 text-xs">
-                                        {project.tags.map((tag, tagIdx) => (
-                                            <span key={tagIdx} className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
+                    <ProjectCard projects={projects} />
                     <Separator />
 
                     { /* posts */}

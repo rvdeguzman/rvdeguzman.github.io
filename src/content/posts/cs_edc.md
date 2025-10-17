@@ -1,6 +1,6 @@
 ---
-title: "Concordia University Experience"
-description: "My experience at CON-U"
+title: "cs student edc"
+description: "what i bring to school everyday as a computer science student"
 date: "2025-09-01"
 color: "#7e98e8"
 ---

@@ -1,8 +1,10 @@
 ---
-title: "Task Management App"
-description: "A React-based productivity app with drag-and-drop functionality and real-time collaboration features."
-tags: ["React", "Node.js"]
+title: "raysteroid"
+description: "raylib recreation of asteroids"
+tags: ["C", "raylib"]
 featured: true
+url: "https://github.com/rvdeguzman/raysteroid"
+color: "#fbcb97"
 ---
 
 # Task Management App

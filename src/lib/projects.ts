@@ -11,6 +11,8 @@ export interface Project {
     tags: string[];
     featured: boolean;
     content: string;
+    url?: string;
+    color?: string;
 }
 
 export function getProjects(): Project[] {
@@ -34,6 +36,8 @@ export function getProjects(): Project[] {
                 tags: data.tags || [],
                 featured: data.featured || false,
                 content,
+                url: data.url,
+                color: data.color,
             };
         })
         .filter(project => project.featured);
@@ -54,6 +58,8 @@ export function getProject(slug: string): Project | null {
             tags: data.tags || [],
             featured: data.featured || false,
             content,
+            url: data.url,
+            color: data.color,
         };
     } catch {
         return null;

@@ -62,19 +62,21 @@ const Header = () => {
                         <Link
                             key={idx}
                             href={tab.href}
-                            className="relative text-gray-400 transition-colors duration-200"
+                            className="relative inline-block text-gray-400 transition-colors duration-200"
                             style={{
                                 color: hoveredTab === idx || getCurrentTabIndex() === idx ? 'var(--accent1)' : undefined,
                                 fontWeight: getCurrentTabIndex() === idx ? 'bold' : undefined,
-                                textDecoration: getCurrentTabIndex() === idx ? 'underline' : undefined
-                            }}
+                            } as React.CSSProperties}
                             onMouseEnter={() => setHoveredTab(idx)}
                             onMouseLeave={() => setHoveredTab(null)}
                         >
                             {tab.label}
-                            {hoveredTab === idx && (
-                                <span className="absolute inset-0 transition-all duration-500 -z-10" />
-                            )}
+                            <span 
+                                className="absolute bottom-0 left-0 h-0.5 bg-[var(--accent1)] transition-all duration-300"
+                                style={{
+                                    width: getCurrentTabIndex() === idx || hoveredTab === idx ? '100%' : '0%'
+                                }}
+                            />
                         </Link>
                     ))}
                 </div>
