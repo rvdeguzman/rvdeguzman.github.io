@@ -60,8 +60,8 @@ export default function Home() {
                                             experiences.map((exp, idx) => (
                                                 <div key={idx} className="relative pl-24">
                                                     <div className="absolute left-0 w-8 h-8 rounded-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden flex items-center justify-center">
-                                                        <img 
-                                                            src={exp.icon} 
+                                                        <img
+                                                            src={exp.icon}
                                                             alt={`${exp.company} logo`}
                                                             className="w-full h-full object-cover"
                                                         />
@@ -75,8 +75,13 @@ export default function Home() {
                                                         </div>
                                                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{exp.company}</p>
                                                         <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-3 text-justify">
-                                                            {exp.description}
+                                                            {exp.location}
                                                         </p>
+                                                        <div className="text-gray-600 dark:text-gray-400 leading-relaxed prose prose-gray text-justify dark:prose-invert max-w-none">
+                                                            {exp.content.split('\n').map((line, idx) => (
+                                                                line.trim() ? <p key={idx} className="mb-4">{line}</p> : null
+                                                            ))}
+                                                        </div>
                                                         <div className="flex flex-wrap gap-2">
                                                             {exp.tags.map((tag, tagIdx) => (
                                                                 <span key={tagIdx} className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded">

@@ -8,7 +8,7 @@ export interface Experience {
     slug: string;
     company: string;
     role: string;
-    description: string;
+    location: string;
     startDate: string;
     endDate: string | null;
     icon: string;
@@ -34,7 +34,7 @@ export function getExperiences(): Experience[] {
                 slug,
                 company: data.company,
                 role: data.role,
-                description: data.description,
+                location: data.location,
                 startDate: data.startDate,
                 endDate: data.endDate || null,
                 icon: data.icon,
@@ -61,7 +61,7 @@ export function getExperience(slug: string): Experience | null {
             slug,
             company: data.company,
             role: data.role,
-            description: data.description,
+            location: data.location,
             startDate: data.startDate,
             endDate: data.endDate || null,
             icon: data.icon,

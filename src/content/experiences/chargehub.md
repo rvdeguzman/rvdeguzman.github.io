@@ -1,0 +1,11 @@
+---
+company: "ChargeHub"
+role: "Software Developer Intern"
+startDate: "2023-01-01"
+endDate: "2023-12-31"
+icon: "/icons/chargehub.png"
+location: "Pointe-Claire, QC"
+tags: ["VueJS", "Node.js", "MSSQL", "Retool"]
+---
+Developed internal tools and dashboards using Retool for B2B clients.
+Developed dashboard for charge point operators to monitor and manage electric vehicle charging stations through UGC.
