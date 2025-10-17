@@ -37,17 +37,13 @@ export default function TorusKnotCanvas() {
                     <color attach="background" args={['black']} />
                     <ambientLight intensity={0.75} />
                     <directionalLight position={[500, 10, 20]} intensity={10} />
-                    {useText ? (
-                        <TextToModel text="</>" size={0.6} height={0.15} />
-                    ) : (
-                        <ModelLoader modelPath="/ae86.glb" scale={1.1} />
-                    )}
+                    <TextToModel text="</>" size={0.6} height={0.15} />
                     <AsciiRenderer
                         bgColor="transparent"
                         characters=" .:-+*=%@#"
-                        resolution={1}
+                        resolution={0.2}
                     />
-                    <OrbitControls enableZoom={false} minDistance={3.5} maxDistance={3} />
+                    <OrbitControls enableZoom={false} minDistance={1} maxDistance={1} />
                 </Canvas>
             </div>
         </div>
