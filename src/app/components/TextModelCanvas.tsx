@@ -23,12 +23,12 @@ export default function TextModelCanvas() {
             <div className="w-full h-full aspect-square max-w-sm max-h-sm">
                 <Canvas camera={{
                     fov: 35,
-                    position: [0, -0.333, 4],
+                    position: [0, 0.0, 6],
                 }}>
                     <color attach="background" args={['black']} />
-                    <ambientLight intensity={0.75} />
+                    <ambientLight intensity={1.5} />
                     <directionalLight position={[50, 30, 50]} intensity={10} />
-                    <TextToModel text="Ω" size={1} height={0.15} scaleY={1} scaleX={5} rotateX={false} />
+                    <TextToModel text="Ω" size={1.3} height={0.15} scaleY={1} scaleX={5} rotateX={false} />
                     <AsciiRenderer
                         fgColor="red"
                         bgColor="transparent"
