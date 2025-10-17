@@ -24,7 +24,7 @@ export default function Home() {
                                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
                                         {about.location} | {about.email}
                                     </p>
-                                    <div className="text-gray-600 dark:text-gray-400 leading-relaxed prose prose-gray dark:prose-invert max-w-none">
+                                    <div className="text-gray-600 dark:text-gray-400 leading-relaxed prose prose-gray text-justify dark:prose-invert max-w-none">
                                         {about.content.split('\n').map((line, idx) => (
                                             line.trim() ? <p key={idx} className="mb-4">{line}</p> : null
                                         ))}
@@ -34,7 +34,7 @@ export default function Home() {
                                 <>
                                     <h1 className="text-3xl font-bold mb-4">About Me</h1>
                                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                        Welcome to my personal website. Content is loading...
+                                        Loading...
                                     </p>
                                 </>
                             )}
@@ -45,14 +45,14 @@ export default function Home() {
                         </div>
                     </div>
 
-                    { /* experiences */}
+                    {/* experiences */}
 
-                    { /* projects */}
-                    < section >
+                    {/* projects */}
+                    <section>
                         <h2 className="text-2xl font-semibold mb-4">Projects</h2>
                         <div className="grid gap-4 md:grid-cols-2">
                             {projects.map((project, idx) => (
-                                <div key={idx} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                <div key={idx} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg text-justify">
                                     <h3 className="font-medium mb-2">{project.title}</h3>
                                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                                         {project.description}
@@ -67,7 +67,7 @@ export default function Home() {
                                 </div>
                             ))}
                         </div>
-                    </section >
+                    </section>
 
                     { /* posts */}
                     < section >
@@ -86,7 +86,7 @@ export default function Home() {
                                                         {post.title}
                                                     </a>
                                                 </h3>
-                                                <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+                                                <p className="text-gray-600 dark:text-gray-400 text-sm mb-2 text-justify">
                                                     {post.description}
                                                 </p>
                                                 <time className="text-xs text-gray-500">{post.date}</time>
