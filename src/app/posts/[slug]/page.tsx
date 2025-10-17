@@ -1,5 +1,5 @@
 import Header from "../../header";
-import { getPost, getAllPosts } from "../../../lib/posts";
+import { getPost, getPosts } from "../../../lib/posts";
 import { notFound } from "next/navigation";
 
 interface PostPageProps {
@@ -9,7 +9,7 @@ interface PostPageProps {
 }
 
 export function generateStaticParams() {
-    const posts = getAllPosts();
+    const posts = getPosts();
     return posts.map((post) => ({
         slug: post.slug,
     }));

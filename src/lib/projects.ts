@@ -13,7 +13,7 @@ export interface Project {
     content: string;
 }
 
-export function getAllProjects(): Project[] {
+export function getProjects(): Project[] {
     if (!fs.existsSync(projectsDirectory)) {
         return [];
     }

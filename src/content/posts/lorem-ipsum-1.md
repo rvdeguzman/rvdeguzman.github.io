@@ -1,7 +1,7 @@
 ---
-title: "Lorem Ipsum"
-description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-date: "2024-03-15"
+title: "Why I love Split Keyboards"
+description: "My journey into the world of split keyboards and why I think they're great."
+date: "2025-10-15"
 color: "#fbcb97"
 ---
 
