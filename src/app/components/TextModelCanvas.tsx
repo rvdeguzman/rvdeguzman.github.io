@@ -30,8 +30,9 @@ export default function TextModelCanvas() {
                     <color attach="background" args={['black']} />
                     <ambientLight intensity={0.75} />
                     <directionalLight position={[500, 10, 20]} intensity={10} />
-                    <TextToModel text="</>" size={0.8} height={0.15} scaleY={1.3} />
+                    <TextToModel text="Ω" size={0.8} height={0.15} scaleY={1.5} scaleX={3} />
                     <AsciiRenderer
+                        fgColor="red"
                         bgColor="transparent"
                         characters=" .:-+*=%@#"
                         resolution={0.2}

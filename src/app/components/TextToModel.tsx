@@ -13,11 +13,13 @@ interface TextToModelProps {
     height?: number;
     scale?: number;
     scaleY?: number;
+    scaleX?: number;
     rotateY?: boolean;
+    rotateX?: boolean;
     [key: string]: unknown;
 }
 
-function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, ...props }: TextToModelProps) {
+function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, rotateX = true, ...props }: TextToModelProps) {
     const { resolvedTheme } = useTheme();
     const groupRef = useRef<THREE.Group>(null);
     const textRef = useRef<THREE.Mesh>(null);
@@ -27,6 +29,9 @@ function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, ...pr
     useFrame((_, delta) => {
         if (groupRef.current && rotateY) {
             groupRef.current.rotation.y += delta / 2;
+        }
+        if (groupRef.current && rotateX) {
+            groupRef.current.rotation.x += delta / 2;
         }
         // Center the geometry after it's loaded
         if (textRef.current && !centered) {
@@ -73,9 +78,9 @@ function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, ...pr
     );
 }
 
-export default function TextToModel({ scale = 1, scaleY = 1, ...props }: TextToModelProps & { scale?: number; scaleY?: number }) {
+export default function TextToModel({ scale = 1, scaleY = 1, scaleX = 1, ...props }: TextToModelProps & { scale?: number; scaleY?: number }) {
     return (
-        <group scale={[scale, scale * scaleY, scale]}>
+        <group scale={[scale, scale * scaleY, scale * scaleX]}>
             <Suspense fallback={null}>
                 <TextModel {...props} />
             </Suspense>
