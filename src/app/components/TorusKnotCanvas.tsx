@@ -25,27 +25,26 @@ export default function TorusKnotCanvas() {
     return (
         <div className="w-full max-w-2xl mx-auto">
             <div className="mb-4 text-center">
-                <button
-                    onClick={() => setUseText(!useText)}
-                    className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                >
-                    {useText ? 'Show GLB Model' : 'Show Text Model'}
-                </button>
             </div>
             <div className="h-80">
-                <Canvas>
+                <Canvas camera={{
+                    fov: 75,
+                    position: [0, 0, 6],
+                    near: 0.1,
+                    far: 1000
+                }}>
                     <color attach="background" args={['black']} />
                     <ambientLight intensity={0.75} />
                     <directionalLight position={[500, 10, 20]} intensity={10} />
-                    <TextToModel text="</>" size={0.6} height={0.15} />
+                    <TextToModel text="</>" size={0.8} height={0.15} />
                     <AsciiRenderer
                         bgColor="transparent"
                         characters=" .:-+*=%@#"
-                        resolution={0.2}
+                        resolution={0.5}
                     />
-                    <OrbitControls enableZoom={false} minDistance={1} maxDistance={1} />
+                    <OrbitControls enableZoom={false} minDistance={2} maxDistance={2} />
                 </Canvas>
             </div>
-        </div>
+        </div >
     );
 }
