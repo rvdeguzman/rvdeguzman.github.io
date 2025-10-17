@@ -36,7 +36,6 @@ export default function Home() {
                                 <p className="text-gray-600 dark:text-gray-400">No posts available.</p>
                             ) : (
                                 <div className="space-y-4">
-                                    { /* get the 3 most recent posts */}
                                     {
                                         posts.slice(0, 3).map((post, idx) => (
                                             <article key={idx} className="border-l-4 border-gray-200 dark:border-gray-700 pl-4 group"
@@ -81,19 +80,9 @@ export default function Home() {
                     </section >
 
                     {/* footer */}
-                    < div className="pt-8 mt-8 border-t border-gray-200 dark:border-gray-700" />
+                    <div className="mb-0 border-t border-gray-200 dark:border-gray-700" />
                     <TextModelWrapper />
-                    <div className="flex justify-left">
-                        { /* 
-                            <img
-                                src="/conu.gif"
-                                alt="Concordia University"
-                                className="w-22 h-8"
-                                width={88}
-                                height={31}
-                            />
-                            */}
-                    </div>
+                    <div className="border-t border-gray-200 dark:border-gray-700" />
                 </div >
             </main >
         </div >
