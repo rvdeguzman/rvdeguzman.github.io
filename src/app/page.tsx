@@ -19,7 +19,7 @@ export default function Home() {
             <main className="max-w-2xl mx-auto px-8 py-8 pt-0">
                 <div className="space-y-8">
                     { /* about me and model */}
-                    <div className="flex flex-col lg:flex-row lg:items-start mb-0">
+                    <div className="flex flex-col lg:flex-row lg:items-stretch mb-0 lg:min-h-0">
                         <section className="lg:w-2/3">
                             {about ? (
                                 <>

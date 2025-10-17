@@ -4,9 +4,13 @@ import dynamic from "next/dynamic";
 
 const TextModelCanvas = dynamic(() => import("./TextModelCanvas"), {
     ssr: false,
-    loading: () => <div className="h-80 w-full max-w-2xl mx-auto bg-black rounded flex items-center justify-center text-gray-500">Loading...</div>
+    loading: () => <div className="h-full w-full bg-black rounded flex items-center justify-center text-gray-500 min-h-0">Loading...</div>
 });
 
 export default function TextModelWrapper() {
-    return <TextModelCanvas />;
+    return (
+        <div className="h-full w-full min-h-0">
+            <TextModelCanvas />
+        </div>
+    );
 }

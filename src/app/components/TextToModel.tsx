@@ -57,10 +57,10 @@ function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, rotat
             >
                 <Text3D
                     ref={textRef}
-                    font={font || '/fonts/helvetiker_regular.typeface.json'}
+                    font={font || '/fonts/futura.json'}
                     size={size}
                     height={height}
-                    curveSegments={12}
+                    curveSegments={32}
                     bevelEnabled
                     bevelThickness={0.02}
                     bevelSize={0.02}

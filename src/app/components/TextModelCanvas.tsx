@@ -13,21 +13,21 @@ export default function TextModelCanvas() {
     }, []);
     if (!mounted) {
         return (
-            <div className="h-80 w-full max-w-2xl mx-auto bg-black rounded flex items-center justify-center text-gray-500">
-                Loading...
+            <div className="h-full w-full bg-black rounded flex items-center justify-center text-gray-500 min-h-0">
+                ...
             </div>
         );
     }
     return (
-        <div className="w-full max-w-2xl mx-auto">
-            <div className="w-72 h-72 mx-auto">
+        <div className="w-full h-full min-h-0 flex items-center justify-center">
+            <div className="w-full h-full aspect-square max-w-sm max-h-sm">
                 <Canvas camera={{
                     fov: 35,
                     position: [0, -0.333, 4],
                 }}>
                     <color attach="background" args={['black']} />
                     <ambientLight intensity={0.75} />
-                    <directionalLight position={[500, 10, 20]} intensity={10} />
+                    <directionalLight position={[50, 30, 50]} intensity={10} />
                     <TextToModel text="Ω" size={1} height={0.15} scaleY={1} scaleX={5} rotateX={false} />
                     <AsciiRenderer
                         fgColor="red"
