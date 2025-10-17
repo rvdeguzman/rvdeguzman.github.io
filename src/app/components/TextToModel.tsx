@@ -10,7 +10,7 @@ interface TextToModelProps {
     text: string;
     font?: string;
     size?: number;
-    height?: number;
+    thickness?: number;
     scale?: number;
     scaleY?: number;
     scaleX?: number;
@@ -19,7 +19,7 @@ interface TextToModelProps {
     [key: string]: unknown;
 }
 
-function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, rotateX = true, ...props }: TextToModelProps) {
+function TextModel({ text, font, size = 0.5, thickness = 0.1, rotateY = true, rotateX = true, ...props }: TextToModelProps) {
     const groupRef = useRef<THREE.Group>(null);
     const textRef = useRef<THREE.Mesh>(null);
     const [, hover] = useState(false);
@@ -57,9 +57,9 @@ function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, rotat
             >
                 <Text3D
                     ref={textRef}
-                    font={font || '/fonts/futura.json'}
+                    font={font || '/fonts/iosevka.json'}
                     size={size}
-                    height={height}
+                    height={thickness}
                     curveSegments={32}
                     bevelEnabled
                     bevelThickness={0.02}

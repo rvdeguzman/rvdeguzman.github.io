@@ -1,10 +1,26 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
-import { AsciiRenderer } from "@react-three/drei";
-import { useState, useEffect } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { AsciiRenderer, OrbitControls } from "@react-three/drei";
+import { useState, useEffect, useRef } from "react";
+import * as THREE from "three";
 
 import TextToModel from "./TextToModel";
+
+function CameraOrbiter() {
+    useFrame(({ camera }, delta) => {
+        const radius = 5;
+        const speed = 0.5;
+        const time = Date.now() * 0.001 * speed;
+
+        camera.position.x = Math.cos(time) * radius;
+        camera.position.z = Math.sin(time) * radius;
+        camera.position.y = 0.111;
+        camera.lookAt(0, 0, 0);
+    });
+
+    return null;
+}
 
 export default function TextModelCanvas() {
     const [mounted, setMounted] = useState(false);
@@ -22,19 +38,19 @@ export default function TextModelCanvas() {
         <div className="w-full h-full min-h-0 flex items-center justify-center">
             <div className="w-full h-full aspect-square max-w-sm max-h-sm">
                 <Canvas camera={{
-                    fov: 35,
-                    position: [0, 0.111, 5],
-                    rotation: [-Math.PI * 0.02, 0, 0],
+                    fov: 25,
+                    position: [0, 0.111, 6],
                 }}>
                     <color attach="background" args={['black']} />
                     <ambientLight intensity={1.5} />
-                    <directionalLight position={[50, 30, 50]} intensity={10} />
-                    <TextToModel text="Ω" size={1} height={0.2} scaleY={1} scaleX={6.5} rotateX={false} />
+                    <directionalLight position={[500, 10, 20]} intensity={20} />
+                    <CameraOrbiter />
+                    <TextToModel text="</>" size={1} thickness={0.2} scaleY={1} scaleX={1} rotateX={false} rotateY={false} />
                     <AsciiRenderer
-                        fgColor="red"
+                        fgColor="#FEA84E"
                         bgColor="transparent"
                         characters=" .:-+*=%@#"
-                        resolution={0.333}
+                        resolution={0.25}
                     />
                 </Canvas>
             </div>
