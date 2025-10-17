@@ -46,8 +46,6 @@ export default function Home() {
                     </div>
 
                     { /* experiences */}
-                    <section>
-                    </section >
 
                     { /* projects */}
                     < section >

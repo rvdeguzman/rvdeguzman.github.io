@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { AsciiRenderer, OrbitControls } from "@react-three/drei";
+import { AsciiRenderer } from "@react-three/drei";
 import { useState, useEffect } from "react";
 
 import TextToModel from "./TextToModel";
@@ -20,7 +20,7 @@ export default function TextModelCanvas() {
     }
     return (
         <div className="w-full max-w-2xl mx-auto">
-            <div className="w-80 h-80 mx-auto">
+            <div className="w-72 h-72 mx-auto">
                 <Canvas camera={{
                     fov: 35,
                     position: [0, -0.333, 4],

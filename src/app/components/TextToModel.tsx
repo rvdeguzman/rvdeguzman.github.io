@@ -20,7 +20,6 @@ interface TextToModelProps {
 }
 
 function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, rotateX = true, ...props }: TextToModelProps) {
-    const { resolvedTheme } = useTheme();
     const groupRef = useRef<THREE.Group>(null);
     const textRef = useRef<THREE.Mesh>(null);
     const [, hover] = useState(false);
@@ -33,7 +32,6 @@ function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, rotat
         if (groupRef.current && rotateX) {
             groupRef.current.rotation.x += delta / 2;
         }
-        // Center the geometry after it's loaded
         if (textRef.current && !centered) {
             const geometry = textRef.current.geometry;
             if (geometry) {
@@ -69,9 +67,7 @@ function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, rotat
                     bevelSegments={5}
                 >
                     {text}
-                    <meshStandardMaterial
-                        color={resolvedTheme === "dark" ? "aqua" : "coral"}
-                    />
+                    <meshStandardMaterial />
                 </Text3D>
             </group>
         </group>
