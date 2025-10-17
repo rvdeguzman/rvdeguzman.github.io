@@ -12,6 +12,7 @@ interface TextToModelProps {
     size?: number;
     height?: number;
     scale?: number;
+    scaleY?: number;
     rotateY?: boolean;
     [key: string]: unknown;
 }
@@ -72,9 +73,9 @@ function TextModel({ text, font, size = 0.5, height = 0.1, rotateY = true, ...pr
     );
 }
 
-export default function TextToModel({ scale = 1, ...props }: TextToModelProps & { scale?: number }) {
+export default function TextToModel({ scale = 1, scaleY = 1, ...props }: TextToModelProps & { scale?: number; scaleY?: number }) {
     return (
-        <group scale={scale}>
+        <group scale={[scale, scale * scaleY, scale]}>
             <Suspense fallback={null}>
                 <TextModel {...props} />
             </Suspense>
