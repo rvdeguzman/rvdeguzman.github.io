@@ -23,21 +23,18 @@ export default function TextModelCanvas() {
             <div className="w-80 h-80 mx-auto">
                 <Canvas camera={{
                     fov: 35,
-                    position: [0, 0, 6],
-                    near: 0.1,
-                    far: 1000
+                    position: [0, -0.333, 4],
                 }}>
                     <color attach="background" args={['black']} />
                     <ambientLight intensity={0.75} />
                     <directionalLight position={[500, 10, 20]} intensity={10} />
-                    <TextToModel text="Ω" size={0.8} height={0.15} scaleY={1.5} scaleX={3} />
+                    <TextToModel text="Ω" size={1} height={0.15} scaleY={1} scaleX={5} rotateX={false} />
                     <AsciiRenderer
                         fgColor="red"
                         bgColor="transparent"
                         characters=" .:-+*=%@#"
-                        resolution={0.2}
+                        resolution={0.22}
                     />
-                    <OrbitControls enableZoom={false} minDistance={3.5} maxDistance={3.5} />
                 </Canvas>
             </div>
         </div >
