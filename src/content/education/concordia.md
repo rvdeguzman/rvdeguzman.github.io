@@ -8,7 +8,4 @@ icon: "/icons/concordia.png"
 location: "Montréal, QC"
 tags: []
 ---
-Relevant Courses:
-- Data Structures and Algorithms
-- Advanced C++ Programming
 

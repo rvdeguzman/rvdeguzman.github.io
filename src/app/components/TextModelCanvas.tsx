@@ -29,12 +29,12 @@ export default function TextModelCanvas() {
                     <color attach="background" args={['black']} />
                     <ambientLight intensity={1.5} />
                     <directionalLight position={[50, 30, 50]} intensity={10} />
-                    <TextToModel text="Ω" size={1} height={0.1} scaleY={1.2} scaleX={5} rotateX={false} />
+                    <TextToModel text="Ω" size={1} height={0.1} scaleY={1.2} scaleX={5.3} rotateX={false} />
                     <AsciiRenderer
                         fgColor="red"
                         bgColor="transparent"
                         characters=" .:-+*=%@#"
-                        resolution={0.22}
+                        resolution={0.333}
                     />
                 </Canvas>
             </div>
