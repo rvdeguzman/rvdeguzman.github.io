@@ -1,16 +1,15 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { AsciiRenderer, OrbitControls } from "@react-three/drei";
-import { useState, useEffect, useRef } from "react";
-import * as THREE from "three";
+import { AsciiRenderer } from "@react-three/drei";
+import { useState, useEffect } from "react";
 
 import TextToModel from "./TextToModel";
 
 function CameraOrbiter() {
-    useFrame(({ camera }, delta) => {
+    useFrame(({ camera }) => {
         const radius = 5;
-        const speed = 0.5;
+        const speed = 0.8;
         const time = Date.now() * 0.001 * speed;
 
         camera.position.x = Math.cos(time) * radius;
@@ -42,15 +41,16 @@ export default function TextModelCanvas() {
                     position: [0, 0.111, 6],
                 }}>
                     <color attach="background" args={['black']} />
-                    <ambientLight intensity={1.5} />
-                    <directionalLight position={[500, 10, 20]} intensity={20} />
+                    <ambientLight intensity={0.5} />
+                    <directionalLight position={[50, 30, 50]} intensity={7} />
+                    <directionalLight position={[-50, 30, -50]} intensity={5} />
                     <CameraOrbiter />
-                    <TextToModel text="</>" size={1} thickness={0.2} scaleY={1} scaleX={1} rotateX={false} rotateY={false} />
+                    <TextToModel text="</>" size={0.7} thickness={0.2} scaleY={1} scaleX={1} rotateX={false} rotateY={false} />
                     <AsciiRenderer
                         fgColor="#FEA84E"
                         bgColor="transparent"
                         characters=" .:-+*=%@#"
-                        resolution={0.25}
+                        resolution={0.333}
                     />
                 </Canvas>
             </div>
