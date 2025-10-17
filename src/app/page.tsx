@@ -6,7 +6,7 @@ import TorusKnotWrapper from "./components/TorusKnotWrapper";
 export default function Home() {
     const posts = getAllPosts();
     const projects = getAllProjects();
-    
+
     return (
         <div className="min-h-screen">
             <Header />
