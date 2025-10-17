@@ -1,8 +1,8 @@
 ---
 company: "Intact"
 role: "Software Developer I"
-startDate: "2025-09-02"
-endDate: "2025-12-19"
+startDate: "2025-09"
+endDate: null
 icon: "/icons/intact.png"
 location: "Montréal, QC"
 tags: ["Angular", "TypeScript", "Java", "Springboot"]

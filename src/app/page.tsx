@@ -1,5 +1,6 @@
 import Header from "./header";
 import TextModelWrapper from "./components/TextModelWrapper";
+import Separator from "./components/Separator";
 import { getPosts } from "../lib/posts";
 import { getProjects } from "../lib/projects";
 import { getAbout } from "../lib/about";
@@ -46,6 +47,8 @@ export default function Home() {
                         </div>
                     </div>
 
+                    <Separator />
+
                     {/* experiences */}
                     <section>
                         <h2 className="text-2xl font-semibold mb-4">Experience</h2>
@@ -59,11 +62,11 @@ export default function Home() {
                                         {
                                             experiences.map((exp, idx) => (
                                                 <div key={idx} className="relative pl-24">
-                                                    <div className="absolute left-0 w-8 h-8 rounded-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden flex items-center justify-center">
+                                                    <div className="absolute left-0 w-8 h-8 rounded-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden flex items-center justify-center p-1">
                                                         <img
                                                             src={exp.icon}
                                                             alt={`${exp.company} logo`}
-                                                            className="w-full h-full object-cover"
+                                                            className="w-full h-full object-contain"
                                                         />
                                                     </div>
                                                     <div>
@@ -99,6 +102,8 @@ export default function Home() {
                         }
                     </section>
 
+                    <Separator />
+
                     {/* projects */}
                     <section>
                         <h2 className="text-2xl font-semibold mb-4">Projects</h2>
@@ -120,6 +125,7 @@ export default function Home() {
                             ))}
                         </div>
                     </section>
+                    <Separator />
 
                     { /* posts */}
                     < section >
@@ -150,9 +156,8 @@ export default function Home() {
                         }
                     </section >
 
-
                     {/* footer */}
-                    <div className="border-t border-gray-200 dark:border-gray-700" />
+                    <Separator />
                 </div >
             </main >
         </div >
