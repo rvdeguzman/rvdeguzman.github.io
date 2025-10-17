@@ -2,6 +2,7 @@ import Header from "./header";
 import { getAllPosts } from "../lib/posts";
 import { getAllProjects } from "../lib/projects";
 import TorusKnotWrapper from "./components/TorusKnotWrapper";
+import TextModelWrapper from "./components/TextModelWrapper";
 
 export default function Home() {
     const posts = getAllPosts();
@@ -10,7 +11,7 @@ export default function Home() {
     return (
         <div className="min-h-screen">
             <Header />
-            <TorusKnotWrapper />
+            <TextModelWrapper />
             <main className="max-w-2xl mx-auto px-8 py-8">
                 <div className="space-y-8">
                     <section>

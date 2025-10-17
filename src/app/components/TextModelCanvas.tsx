@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 import TextToModel from "./TextToModel";
 
-export default function TorusKnotCanvas() {
+export default function TextModelCanvas() {
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
         setMounted(true);
