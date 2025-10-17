@@ -3,10 +3,11 @@ import TextModelWrapper from "./components/TextModelWrapper";
 import { getPosts } from "../lib/posts";
 import { getProjects } from "../lib/projects";
 import { getAbout } from "../lib/about";
+import { getExperiences } from "../lib/experiences";
 
 export default function Home() {
     const about = getAbout();
-    // const experiences = getExperiences();
+    const experiences = getExperiences();
     const posts = getPosts();
     const projects = getProjects();
     return (
@@ -46,6 +47,52 @@ export default function Home() {
                     </div>
 
                     {/* experiences */}
+                    <section>
+                        <h2 className="text-2xl font-semibold mb-4">Experience</h2>
+                        {
+                            experiences.length === 0 ? (
+                                <p className="text-gray-600 dark:text-gray-400">No experiences available.</p>
+                            ) : (
+                                <div className="relative">
+                                    <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700" />
+                                    <div className="space-y-8">
+                                        {
+                                            experiences.map((exp, idx) => (
+                                                <div key={idx} className="relative pl-24">
+                                                    <div className="absolute left-0 w-8 h-8 rounded-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden flex items-center justify-center">
+                                                        <img 
+                                                            src={exp.icon} 
+                                                            alt={`${exp.company} logo`}
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
+                                                            <h3 className="text-lg font-medium">{exp.role}</h3>
+                                                            <p className="text-xs text-gray-500">
+                                                                {exp.startDate} - {exp.endDate ? exp.endDate : 'Present'}
+                                                            </p>
+                                                        </div>
+                                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{exp.company}</p>
+                                                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-3 text-justify">
+                                                            {exp.description}
+                                                        </p>
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {exp.tags.map((tag, tagIdx) => (
+                                                                <span key={tagIdx} className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded">
+                                                                    {tag}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </section>
 
                     {/* projects */}
                     <section>
