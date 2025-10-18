@@ -13,6 +13,7 @@ const Header = () => {
     const [hoveredTab, setHoveredTab] = useState<number | null>(null);
     const router = useRouter();
     const pathname = usePathname();
+    const [lastKeyTime, setLastKeyTime] = useState<{ [key: string]: number }>({});
 
     const getCurrentTabIndex = useCallback(() => {
         return tabsData.findIndex(tab => tab.href === pathname);
@@ -25,34 +26,46 @@ const Header = () => {
                 return;
             }
 
+            const now = Date.now();
+            const lastTime = lastKeyTime[e.key] || 0;
+            const debounceDelay = e.key === 'h' || e.key === 'l' ? 300 : 300;
+
+            if (now - lastTime < debounceDelay) {
+                return;
+            }
+
             // vim motionssss
             switch (e.key) {
                 case 'j':
                     e.preventDefault();
                     window.scrollBy({ top: 100, behavior: 'smooth' });
+                    setLastKeyTime(prev => ({ ...prev, [e.key]: now }));
                     break;
                 case 'k':
                     e.preventDefault();
                     window.scrollBy({ top: -100, behavior: 'smooth' });
+                    setLastKeyTime(prev => ({ ...prev, [e.key]: now }));
                     break;
                 case 'h':
                     e.preventDefault();
                     const currentIndex = getCurrentTabIndex();
                     const prevIndex = currentIndex <= 0 ? tabsData.length - 1 : currentIndex - 1;
                     router.push(tabsData[prevIndex].href);
+                    setLastKeyTime(prev => ({ ...prev, [e.key]: now }));
                     break;
                 case 'l':
                     e.preventDefault();
                     const currentIndexL = getCurrentTabIndex();
                     const nextIndex = currentIndexL >= tabsData.length - 1 ? 0 : currentIndexL + 1;
                     router.push(tabsData[nextIndex].href);
+                    setLastKeyTime(prev => ({ ...prev, [e.key]: now }));
                     break;
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [router, pathname, getCurrentTabIndex]);
+    }, [router, pathname, getCurrentTabIndex, lastKeyTime]);
 
     return (
         <div className="w-full flex flex-col justify-center px-8">
@@ -71,7 +84,7 @@ const Header = () => {
                             onMouseLeave={() => setHoveredTab(null)}
                         >
                             {tab.label}
-                            <span 
+                            <span
                                 className="absolute bottom-0 left-0 h-0.5 bg-[var(--accent1)] transition-all duration-300"
                                 style={{
                                     width: getCurrentTabIndex() === idx || hoveredTab === idx ? '100%' : '0%'

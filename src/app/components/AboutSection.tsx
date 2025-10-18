@@ -1,5 +1,8 @@
+"use client";
+
 import TextModelWrapper from "./TextModelWrapper";
 import { About } from "@/lib/about";
+import { FaLinkedin, FaGithub, FaFileDownload } from "react-icons/fa";
 
 export default function AboutSection({ about }: { about: About | null }) {
     return (
@@ -16,6 +19,32 @@ export default function AboutSection({ about }: { about: About | null }) {
                             {about.content.split('\n').map((line, idx) => (
                                 line.trim() ? <p key={idx} className="mb-4">{line}</p> : null
                             ))}
+                        </div>
+                        <div className="flex gap-4 mb-4">
+                            <a
+                                href="https://linkedin.com/in/rvdeguzman"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-400 transition-all duration-300 hover:text-[var(--accent1)]"
+                            >
+                                <FaLinkedin size={24} />
+                            </a>
+                            <a
+                                href="https://github.com/rvdeguzman"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-400 transition-all duration-300 hover:text-[var(--accent1)]"
+                            >
+                                <FaGithub size={24} />
+                            </a>
+                            <a
+                                href="/rvdeguzman_cv.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-400 transition-all duration-300 hover:text-[var(--accent1)]"
+                            >
+                                <FaFileDownload size={24} />
+                            </a>
                         </div>
                     </>
                 ) : (
