@@ -21,7 +21,7 @@ export default function Home() {
     const education = getEducation();
     const posts = getPosts();
     const projects = getProjects();
-    
+
     return (
         <div className="min-h-screen">
             <style>{`
@@ -39,7 +39,7 @@ export default function Home() {
             <Header />
             <main className="max-w-2xl mx-auto px-8 py-8 pt-0">
                 <div className="space-y-8">
-                    <div style={fadeInStyle(0)}>
+                    <div style={fadeInStyle(0)} className="mb-0">
                         <AboutSection about={about} />
                     </div>
                     <div style={fadeInStyle(0.1)}>
