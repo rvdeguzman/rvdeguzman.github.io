@@ -1,10 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Loading from "./Loading";
 
 const TextModelCanvas = dynamic(() => import("./TextModelCanvas"), {
     ssr: false,
-    loading: () => <div className="h-full w-full bg-black rounded flex items-center justify-center text-gray-500 min-h-0">Loading...</div>
+    loading: () => <Loading />
 });
 
 export default function TextModelWrapper() {
