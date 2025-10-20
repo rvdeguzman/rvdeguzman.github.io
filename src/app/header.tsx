@@ -16,7 +16,15 @@ const Header = () => {
     const [lastKeyTime, setLastKeyTime] = useState<{ [key: string]: number }>({});
 
     const getCurrentTabIndex = useCallback(() => {
-        return tabsData.findIndex(tab => tab.href === pathname);
+        let index = tabsData.findIndex((tab) => tab.href === pathname);
+
+        if (index === -1) {
+            index = tabsData.findIndex((tab) => {
+                if (tab.href === "/") return false;
+                return pathname.startsWith(tab.href);
+            });
+        }
+        return index;
     }, [pathname]);
 
     useEffect(() => {
