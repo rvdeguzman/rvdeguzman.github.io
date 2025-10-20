@@ -43,3 +43,7 @@ body {
   font-family: 'Iosevka', sans-serif;
   overflow-y: scroll;
 }
+
+.about {
+    color: var(--accent1);
+}
