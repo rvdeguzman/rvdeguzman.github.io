@@ -1,7 +1,7 @@
 ---
-title: "rafael vincent"
-description: cs @ concordia
-location: montréal, qc 
+title: "Rafael Vincent"
+description: "CS @ Concordia"
+location: "Montréal, QC"
 email: rvdeguzman@protonmail.com
 ---
-i love terminal user interfaces and workflow optimization. outside of code, i make music, take photos, and finding new ways to improve my setup.
+I love terminal user interfaces (TUIs) and workflow optimization. Outside of code, I make music, take photos, and create content about tech.
