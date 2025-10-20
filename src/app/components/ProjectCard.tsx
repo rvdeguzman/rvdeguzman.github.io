@@ -1,6 +1,7 @@
 'use client';
 
 import { Project } from "@/lib/projects";
+import Tag from "./Tag";
 
 export default function ProjectCard({ projects }: { projects: Project[] }) {
     return (
@@ -20,9 +21,7 @@ export default function ProjectCard({ projects }: { projects: Project[] }) {
                         </p>
                         <div className="flex gap-2 text-xs">
                             {project.tags.map((tag, tagIdx) => (
-                                <span key={tagIdx} className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded">
-                                    {tag}
-                                </span>
+                                <Tag key={tagIdx} text={tag} />
                             ))}
                         </div>
                     </div>

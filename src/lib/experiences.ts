@@ -4,15 +4,21 @@ import matter from 'gray-matter';
 
 const experiencesDirectory = path.join(process.cwd(), 'src/content/experiences');
 
+export interface SubsectionItem {
+    label: string;
+}
+
 export interface Experience {
     slug: string;
     company: string;
     role: string;
     location: string;
     startDate: string;
+    dateLabel: string;
     endDate: string | null;
     icon: string;
     tags: string[];
+    subsections: SubsectionItem[];
     content: string;
 }
 
@@ -36,9 +42,11 @@ export function getExperiences(): Experience[] {
                 role: data.role,
                 location: data.location,
                 startDate: data.startDate,
+                dateLabel: data.dateLabel,
                 endDate: data.endDate || null,
                 icon: data.icon,
                 tags: data.tags || [],
+                subsections: data.subsections || [],
                 content,
             };
         })
@@ -63,9 +71,11 @@ export function getExperience(slug: string): Experience | null {
             role: data.role,
             location: data.location,
             startDate: data.startDate,
+            dateLabel: data.dateLabel,
             endDate: data.endDate || null,
             icon: data.icon,
             tags: data.tags || [],
+            subsections: data.subsections || [],
             content,
         };
     } catch {

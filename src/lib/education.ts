@@ -4,6 +4,12 @@ import matter from 'gray-matter';
 
 const educationDirectory = path.join(process.cwd(), 'src/content/education');
 
+export interface Subsection {
+    type: "experience" | "achievement";
+    label: string;
+    slug?: string;
+}
+
 export interface Education {
     slug: string;
     school: string;
@@ -12,8 +18,10 @@ export interface Education {
     location: string;
     startDate: string;
     endDate: string | null;
+    dateLabel: string;
     icon: string;
     tags: string[];
+    subsections: Subsection[];
     content: string;
 }
 
@@ -39,8 +47,10 @@ export function getEducation(): Education[] {
                 location: data.location,
                 startDate: data.startDate,
                 endDate: data.endDate || null,
+                dateLabel: data.dateLabel,
                 icon: data.icon,
                 tags: data.tags || [],
+                subsections: data.subsections || [],
                 content,
             };
         })
@@ -67,8 +77,10 @@ export function getEducationItem(slug: string): Education | null {
             location: data.location,
             startDate: data.startDate,
             endDate: data.endDate || null,
+            dateLabel: data.dateLabel,
             icon: data.icon,
             tags: data.tags || [],
+            subsections: data.subsections || [],
             content,
         };
     } catch {

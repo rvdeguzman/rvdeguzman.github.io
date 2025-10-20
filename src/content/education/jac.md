@@ -4,8 +4,12 @@ degree: "DEC"
 major: "Computer Science"
 startDate: "2020-08"
 endDate: "2023-05"
+dateLabel: "F2020 - W2023"
 icon: "/icons/jac.png"
 location: "Ste-Anne-de-Bellevue, QC"
 tags: []
+subsections:
+  - label: "Dean's List"
+
 ---
 

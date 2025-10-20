@@ -2,6 +2,7 @@
 company: "ChargeHub"
 role: "Software Developer Intern"
 startDate: "2023-01-01"
+dateLabel: "W2023"
 endDate: "2023-12-31"
 icon: "/icons/chargehub.png"
 location: "Pointe-Claire, QC"
