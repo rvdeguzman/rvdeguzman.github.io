@@ -3,7 +3,6 @@
 import TextModelWrapper from "./TextModelWrapper";
 import { About } from "@/lib/about";
 import { FaLinkedin, FaGithub, FaFileDownload } from "react-icons/fa";
-import { color } from "three/tsl";
 
 export default function AboutSection({ about }: { about: About | null }) {
     return (
@@ -12,11 +11,11 @@ export default function AboutSection({ about }: { about: About | null }) {
                 {about ? (
                     <>
                         <h1 className="text-3xl font-bold about">{about.title}</h1>
-                        <h2 className="text-2xl text-gray-200">{about.description}</h2>
-                        <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                        <h2 className="text-2xl" style={{ color: 'var(--property)' }}>{about.description}</h2>
+                        <p className="leading-relaxed mb-4" style={{ color: 'var(--comment)' }}>
                             {about.location} | {about.email}
                         </p>
-                        <div className="text-gray-600 dark:text-gray-400 leading-relaxed prose prose-gray text-justify dark:prose-invert max-w-none">
+                        <div className="leading-relaxed prose prose-gray text-justify dark:prose-invert max-w-none" style={{ color: 'var(--comment)' }}>
                             {about.content.split('\n').map((line, idx) => (
                                 line.trim() ? <p key={idx} className="mb-4">{line}</p> : null
                             ))}
@@ -26,7 +25,8 @@ export default function AboutSection({ about }: { about: About | null }) {
                                 href="https://linkedin.com/in/rvdeguzman"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-400 transition-all duration-300 hover:text-[var(--accent1)]"
+                                className="social-icon"
+                                style={{ color: 'var(--comment)' }}
                             >
                                 <FaLinkedin size={24} />
                             </a>
@@ -34,7 +34,8 @@ export default function AboutSection({ about }: { about: About | null }) {
                                 href="https://github.com/rvdeguzman"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-400 transition-all duration-300 hover:text-[var(--accent1)]"
+                                className="social-icon"
+                                style={{ color: 'var(--comment)' }}
                             >
                                 <FaGithub size={24} />
                             </a>
@@ -42,7 +43,8 @@ export default function AboutSection({ about }: { about: About | null }) {
                                 href="/rvdeguzman_cv.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-400 transition-all duration-300 hover:text-[var(--accent1)]"
+                                className="social-icon"
+                                style={{ color: 'var(--comment)' }}
                             >
                                 <FaFileDownload size={24} />
                             </a>
@@ -51,7 +53,7 @@ export default function AboutSection({ about }: { about: About | null }) {
                 ) : (
                     <>
                         <h1 className="text-3xl font-bold mb-4">About Me</h1>
-                        <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <p className="leading-relaxed" style={{ color: 'var(--comment)' }}>
                             ...
                         </p>
                     </>

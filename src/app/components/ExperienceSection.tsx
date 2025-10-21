@@ -7,15 +7,15 @@ export default function ExperienceSection({ experiences }: { experiences: Experi
             <h2 className="text-2xl font-semibold mb-4">Experience</h2>
             {
                 experiences.length === 0 ? (
-                    <p className="text-gray-600 dark:text-gray-400">No experiences available.</p>
+                    <p className="mb-4" style={{ color: 'var(--comment)' }}>No experiences available.</p>
                 ) : (
                     <div className="relative">
-                        <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700" />
+                        <div className="absolute left-4 top-0 bottom-0 w-0.5" style={{ backgroundColor: 'var(--line)' }} />
                         <div className="space-y-8">
                             {
                                 experiences.map((exp, idx) => (
                                     <div key={idx} className="relative pl-24">
-                                        <div className="absolute left-0 w-8 h-8 rounded-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden flex items-center justify-center p-1">
+                                        <div className="absolute left-0 w-8 h-8 rounded-full border-2 overflow-hidden flex items-center justify-center p-1" style={{ borderColor: 'var(--line)', backgroundColor: 'var(--visual)' }}>
                                             <img
                                                 src={exp.icon}
                                                 alt={`${exp.company} logo`}
@@ -26,15 +26,15 @@ export default function ExperienceSection({ experiences }: { experiences: Experi
                                             <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-1">
                                                 <h3 className="text-lg font-medium">{exp.company}</h3>
                                                 <div className="flex flex-col items-start md:items-end">
-                                                    <p className="text-xs text-gray-500">
+                                                    <p className="text-xs" style={{ color: 'var(--operator)' }}>
                                                         {exp.dateLabel}
                                                     </p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                                                    <p className="text-xs" style={{ color: 'var(--comment)' }}>
                                                         {exp.location}
                                                     </p>
                                                 </div>
                                             </div>
-                                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{exp.role}</p>
+                                            <p className="text-sm mb-2" style={{ color: 'var(--comment)' }}>{exp.role}</p>
                                             <div className="flex flex-wrap gap-2">
                                                 {exp.tags.map((tag, tagIdx) => (
                                                     <Tag key={tagIdx} text={tag} />
@@ -43,7 +43,7 @@ export default function ExperienceSection({ experiences }: { experiences: Experi
                                             {exp.subsections.length > 0 && (
                                                 <div className="ml-4 space-y-1">
                                                     {exp.subsections.map((subsection, subIdx) => (
-                                                        <div key={subIdx} className="text-sm text-gray-600 dark:text-gray-400">
+                                                        <div key={subIdx} className="text-sm" style={{ color: 'var(--comment)' }}>
                                                             • {subsection.label}
                                                         </div>
                                                     ))}

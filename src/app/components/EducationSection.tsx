@@ -8,15 +8,15 @@ export default function EducationSection({ education }: { education: Education[]
             <h2 className="text-2xl font-semibold mb-4">Education</h2>
             {
                 education.length === 0 ? (
-                    <p className="text-gray-600 dark:text-gray-400">No education available.</p>
+                    <p className="mb-4" style={{ color: 'var(--comment)' }}>No education available.</p>
                 ) : (
                     <div className="relative">
-                        <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700" />
+                        <div className="absolute left-4 top-0 bottom-0 w-0.5" style={{ backgroundColor: 'var(--line)' }} />
                         <div className="space-y-8">
                             {
                                 education.map((edu, idx) => (
                                     <div key={idx} className="relative pl-24">
-                                        <div className="absolute left-0 w-8 h-8 rounded-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden flex items-center justify-center p-1">
+                                        <div className="absolute left-0 w-8 h-8 rounded-full border-2 overflow-hidden flex items-center justify-center p-1" style={{ borderColor: 'var(--line)', backgroundColor: 'var(--visual)' }}>
                                             <img
                                                 src={edu.icon}
                                                 alt={`${edu.school} logo`}
@@ -27,15 +27,15 @@ export default function EducationSection({ education }: { education: Education[]
                                             <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-1">
                                                 <h3 className="text-lg font-medium">{edu.school}</h3>
                                                 <div className="flex flex-col items-start md:items-end">
-                                                    <p className="text-xs text-gray-500">
+                                                    <p className="text-xs" style={{ color: 'var(--operator)' }}>
                                                         {edu.dateLabel}
                                                     </p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                                                    <p className="text-xs" style={{ color: 'var(--comment)' }}>
                                                         {edu.location}
                                                     </p>
                                                 </div>
                                             </div>
-                                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{edu.major}, {edu.degree}</p>
+                                            <p className="text-sm mb-2" style={{ color: 'var(--comment)' }}>{edu.major}, {edu.degree}</p>
                                             <div className="flex flex-wrap gap-2">
                                                 {edu.tags.map((tag, tagIdx) => (
                                                     <Tag key={tagIdx} text={tag} />
@@ -44,7 +44,7 @@ export default function EducationSection({ education }: { education: Education[]
                                             {edu.subsections.length > 0 && (
                                                 <div className="ml-4 space-y-1">
                                                     {edu.subsections.map((subsection, subIdx) => (
-                                                        <div key={subIdx} className="text-sm text-gray-600 dark:text-gray-400">
+                                                        <div key={subIdx} className="text-sm" style={{ color: 'var(--comment)' }}>
                                                             • {subsection.label}
                                                         </div>
                                                     ))}

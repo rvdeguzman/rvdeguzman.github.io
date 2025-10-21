@@ -17,10 +17,29 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #c1c1c1;
   --accent1: #fbcb97;
   --bg-hover: #333333;
+  --line: #252530;
+  --comment: #606079;
+  --builtin: #b4d4cf;
+  --func: #c48282;
+  --string: #fbcb97;
+  --number: #e0a363;
+  --property: #c1c1c1;
+  --constant: #aeaed1;
+  --parameter: #bb9dbd;
+  --visual: #333333;
+  --error: #d8647e;
+  --warning: #f3be7c;
+  --hint: #7e98e8;
+  --operator: #9b99a3;
+  --keyword: #5f8787;
+  --type: #d0dfee;
+  --search: #405065;
+  --plus: #7fa563;
+  --delta: #f3be7c;
 }
 
 @theme inline {
@@ -32,8 +51,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #c1c1c1;
   }
 }
 
@@ -46,4 +65,46 @@ body {
 
 .about {
     color: var(--accent1);
+}
+
+a.social-icon {
+    transition: color 0.3s ease;
+}
+
+a.social-icon:nth-child(1):hover {
+    color: var(--builtin) !important;
+}
+
+a.social-icon:nth-child(2):hover {
+    color: var(--func) !important;
+}
+
+a.social-icon:nth-child(3):hover {
+    color: var(--string) !important;
+}
+
+h2[style*="--after-color"]::after,
+h3[style*="--after-color"]::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 0.125rem;
+    width: 0;
+    background-color: var(--after-color, var(--hover-color));
+    transition: width 0.3s ease;
+}
+
+.group:has(a:hover) h2[style*="--after-color"]::after,
+.group:hover h2[style*="--after-color"]::after,
+.group:has(a:hover) h3[style*="--after-color"]::after,
+.group:hover h3[style*="--after-color"]::after {
+    width: 100%;
+}
+
+.group:has(a:hover) h2,
+.group:hover h2,
+.group:has(a:hover) h3,
+.group:hover h3 {
+    color: var(--after-color, var(--hover-color)) !important;
 }
