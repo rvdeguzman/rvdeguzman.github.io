@@ -1,6 +1,8 @@
 import { Education } from "@/lib/education";
+import Tag from "./Tag";
 
 export default function EducationSection({ education }: { education: Education[] }) {
+
     return (
         <section>
             <h2 className="text-2xl font-semibold mb-4">Education</h2>
@@ -26,7 +28,7 @@ export default function EducationSection({ education }: { education: Education[]
                                                 <h3 className="text-lg font-medium">{edu.school}</h3>
                                                 <div className="flex flex-col items-start md:items-end">
                                                     <p className="text-xs text-gray-500">
-                                                        {edu.startDate} - {edu.endDate ? edu.endDate : 'Present'}
+                                                        {edu.dateLabel}
                                                     </p>
                                                     <p className="text-xs text-gray-600 dark:text-gray-400">
                                                         {edu.location}
@@ -36,11 +38,18 @@ export default function EducationSection({ education }: { education: Education[]
                                             <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{edu.major}, {edu.degree}</p>
                                             <div className="flex flex-wrap gap-2">
                                                 {edu.tags.map((tag, tagIdx) => (
-                                                    <span key={tagIdx} className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded">
-                                                        {tag}
-                                                    </span>
+                                                    <Tag key={tagIdx} text={tag} />
                                                 ))}
                                             </div>
+                                            {edu.subsections.length > 0 && (
+                                                <div className="ml-4 space-y-1">
+                                                    {edu.subsections.map((subsection, subIdx) => (
+                                                        <div key={subIdx} className="text-sm text-gray-600 dark:text-gray-400">
+                                                            • {subsection.label}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 ))

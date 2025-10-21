@@ -1,4 +1,5 @@
 import { Experience } from "@/lib/experiences";
+import Tag from "./Tag";
 
 export default function ExperienceSection({ experiences }: { experiences: Experience[] }) {
     return (
@@ -26,14 +27,28 @@ export default function ExperienceSection({ experiences }: { experiences: Experi
                                                 <h3 className="text-lg font-medium">{exp.company}</h3>
                                                 <div className="flex flex-col items-start md:items-end">
                                                     <p className="text-xs text-gray-500">
-                                                        {exp.startDate} - {exp.endDate ? exp.endDate : 'Present'}
+                                                        {exp.dateLabel}
                                                     </p>
                                                     <p className="text-xs text-gray-600 dark:text-gray-400">
                                                         {exp.location}
                                                     </p>
                                                 </div>
                                             </div>
-                                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{exp.role}</p>
+                                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{exp.role}</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {exp.tags.map((tag, tagIdx) => (
+                                                    <Tag key={tagIdx} text={tag} />
+                                                ))}
+                                            </div>
+                                            {exp.subsections.length > 0 && (
+                                                <div className="ml-4 space-y-1">
+                                                    {exp.subsections.map((subsection, subIdx) => (
+                                                        <div key={subIdx} className="text-sm text-gray-600 dark:text-gray-400">
+                                                            • {subsection.label}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 ))

@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkHtml from 'remark-html';
 
 const projectsDirectory = path.join(process.cwd(), 'src/content/projects');
 
@@ -13,6 +16,15 @@ export interface Project {
     content: string;
     url?: string;
     color?: string;
+    htmlContent?: string;
+}
+
+async function markdownToHtml(markdown: string): Promise<string> {
+    const result = await unified()
+        .use(remarkParse)
+        .use(remarkHtml)
+        .process(markdown);
+    return result.toString();
 }
 
 export function getProjects(): Project[] {
@@ -22,9 +34,9 @@ export function getProjects(): Project[] {
 
     const fileNames = fs.readdirSync(projectsDirectory);
     const projects = fileNames
-        .filter(name => name.endsWith('.md'))
+        .filter(name => name.endsWith('.mdx'))
         .map(name => {
-            const slug = name.replace(/\.md$/, '');
+            const slug = name.replace(/\.mdx$/, '');
             const fullPath = path.join(projectsDirectory, name);
             const fileContents = fs.readFileSync(fullPath, 'utf8');
             const { data, content } = matter(fileContents);
@@ -47,7 +59,7 @@ export function getProjects(): Project[] {
 
 export function getProject(slug: string): Project | null {
     try {
-        const fullPath = path.join(projectsDirectory, `${slug}.md`);
+        const fullPath = path.join(projectsDirectory, `${slug}.mdx`);
         const fileContents = fs.readFileSync(fullPath, 'utf8');
         const { data, content } = matter(fileContents);
 
@@ -64,4 +76,15 @@ export function getProject(slug: string): Project | null {
     } catch {
         return null;
     }
+}
+
+export async function getProjectWithHtml(slug: string): Promise<(Project & { htmlContent: string }) | null> {
+    const project = getProject(slug);
+    if (!project) return null;
+    
+    const htmlContent = await markdownToHtml(project.content);
+    return {
+        ...project,
+        htmlContent,
+    };
 }

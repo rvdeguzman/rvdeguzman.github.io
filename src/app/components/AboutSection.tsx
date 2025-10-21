@@ -3,6 +3,7 @@
 import TextModelWrapper from "./TextModelWrapper";
 import { About } from "@/lib/about";
 import { FaLinkedin, FaGithub, FaFileDownload } from "react-icons/fa";
+import { color } from "three/tsl";
 
 export default function AboutSection({ about }: { about: About | null }) {
     return (
@@ -10,8 +11,8 @@ export default function AboutSection({ about }: { about: About | null }) {
             <section className="lg:w-2/3">
                 {about ? (
                     <>
-                        <h1 className="text-3xl font-bold">{about.title}</h1>
-                        <h2 className="text-2xl text-gray-300">{about.description}</h2>
+                        <h1 className="text-3xl font-bold about">{about.title}</h1>
+                        <h2 className="text-2xl text-gray-200">{about.description}</h2>
                         <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
                             {about.location} | {about.email}
                         </p>
