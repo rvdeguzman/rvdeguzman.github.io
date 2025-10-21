@@ -30,7 +30,9 @@ export default function RootLayout({
                 suppressHydrationWarning={true}
             >
                 <ThemeProvider enableSystem={true} attribute="class">
-                    {children}
+                    <main className="min-h-screen bg-white dark:bg-black bg-[radial-gradient(#333333_1px,transparent_1px)] dark:bg-[radial-gradient(#333333_1px,transparent_1px)] [background-size:48px_48px]">
+                        {children}
+                    </main>
                 </ThemeProvider>
             </body>
         </html>
