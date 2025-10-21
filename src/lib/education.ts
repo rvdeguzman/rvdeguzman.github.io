@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkHtml from 'remark-html';
 
 const educationDirectory = path.join(process.cwd(), 'src/content/education');
 
@@ -23,6 +26,15 @@ export interface Education {
     tags: string[];
     subsections: Subsection[];
     content: string;
+    htmlContent?: string;
+}
+
+async function markdownToHtml(markdown: string): Promise<string> {
+    const result = await unified()
+        .use(remarkParse)
+        .use(remarkHtml)
+        .process(markdown);
+    return result.toString();
 }
 
 export function getEducation(): Education[] {
@@ -32,9 +44,9 @@ export function getEducation(): Education[] {
 
     const fileNames = fs.readdirSync(educationDirectory);
     const education = fileNames
-        .filter(name => name.endsWith('.md'))
+        .filter(name => name.endsWith('.mdx'))
         .map(name => {
-            const slug = name.replace(/\.md$/, '');
+            const slug = name.replace(/\.mdx$/, '');
             const fullPath = path.join(educationDirectory, name);
             const fileContents = fs.readFileSync(fullPath, 'utf8');
             const { data, content } = matter(fileContents);
@@ -65,7 +77,7 @@ export function getEducation(): Education[] {
 
 export function getEducationItem(slug: string): Education | null {
     try {
-        const fullPath = path.join(educationDirectory, `${slug}.md`);
+        const fullPath = path.join(educationDirectory, `${slug}.mdx`);
         const fileContents = fs.readFileSync(fullPath, 'utf8');
         const { data, content } = matter(fileContents);
 
@@ -86,4 +98,15 @@ export function getEducationItem(slug: string): Education | null {
     } catch {
         return null;
     }
+}
+
+export async function getEducationWithHtml(slug: string): Promise<(Education & { htmlContent: string }) | null> {
+    const education = getEducationItem(slug);
+    if (!education) return null;
+    
+    const htmlContent = await markdownToHtml(education.content);
+    return {
+        ...education,
+        htmlContent,
+    };
 }

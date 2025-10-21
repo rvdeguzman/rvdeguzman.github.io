@@ -14,7 +14,7 @@ export interface About {
 
 export function getAbout(): About | null {
     try {
-        const fullPath = path.join(aboutDirectory, 'about.md');
+        const fullPath = path.join(aboutDirectory, 'about.mdx');
 
         if (!fs.existsSync(fullPath)) {
             return null;
