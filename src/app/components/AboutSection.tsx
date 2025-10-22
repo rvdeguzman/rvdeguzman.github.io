@@ -6,8 +6,8 @@ import { FaLinkedin, FaGithub, FaFileDownload } from "react-icons/fa";
 
 export default function AboutSection({ about }: { about: About | null }) {
     return (
-        <div className="flex flex-col lg:flex-row lg:items-stretch mb-0 lg:min-h-0">
-            <section className="lg:w-2/3">
+        <div className="flex flex-col lg:flex-row lg:items-stretch lg:min-h-0 lg:gap-8">
+            <section className="lg:w-1/2">
                 {about ? (
                     <>
                         <h1 className="text-3xl font-bold about">{about.title}</h1>
@@ -60,7 +60,7 @@ export default function AboutSection({ about }: { about: About | null }) {
                 )}
             </section>
 
-            <div className="lg:w-1/3 mt-8 lg:mt-0">
+            <div className="lg:w-2/4 mt-8 lg:mt-0 flex justify-end">
                 <TextModelWrapper />
             </div>
         </div>

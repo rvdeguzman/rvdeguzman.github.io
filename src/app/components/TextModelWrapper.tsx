@@ -10,7 +10,7 @@ const TextModelCanvas = dynamic(() => import("./TextModelCanvas"), {
 
 export default function TextModelWrapper() {
     return (
-        <div className="h-full w-full min-h-0">
+        <div className="w-[270px] h-[270px]">
             <TextModelCanvas />
         </div>
     );
