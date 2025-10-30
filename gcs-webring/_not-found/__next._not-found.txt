@@ -1,4 +1,4 @@
 1:"$Sreact.fragment"
 2:I[39756,["/gcs-webring/_next/static/chunks/42879de7b8087bc9.js"],"default"]
 3:I[37457,["/gcs-webring/_next/static/chunks/42879de7b8087bc9.js"],"default"]
-0:{"buildId":"P1A5orxx2hdCtCLh5LATT","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"rsCRvKa0L9m_UdysH3NRc","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
