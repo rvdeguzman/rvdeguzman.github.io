@@ -37,15 +37,14 @@ export default function TextModelCanvas() {
         <div className="w-full h-full min-h-0 flex items-center justify-center">
             <div className="w-full h-full aspect-square max-w-sm max-h-sm">
                 <Canvas camera={{
-                    fov: 25,
-                    position: [0, 0.111, 6],
+                    fov: 25
                 }}>
                     <color attach="background" args={['black']} />
                     <ambientLight intensity={0.5} />
                     <directionalLight position={[50, 30, 50]} intensity={7} />
                     <directionalLight position={[-50, 30, -50]} intensity={5} />
                     <CameraOrbiter />
-                    <TextToModel text="</>" size={0.7} thickness={0.2} scaleY={1} scaleX={1} rotateX={false} rotateY={false} />
+                    <TextToModel text="</>" size={1} thickness={0.2} scaleY={1} scaleX={1} rotateX={false} rotateY={false} />
                     <AsciiRenderer
                         fgColor="#FEA84E"
                         characters=" .:-+*=%@#"

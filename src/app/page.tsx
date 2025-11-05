@@ -37,7 +37,7 @@ export default function Home() {
                 }
             `}</style>
             <Header />
-            <main className="max-w-2xl mx-auto px-8 py-8 pt-0">
+            <main className="max-w-3xl mx-auto px-8 py-8 pt-0">
                 <div className="space-y-8">
                     <div style={fadeInStyle(0)} className="mb-0">
                         <AboutSection about={about} />
