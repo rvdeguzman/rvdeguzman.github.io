@@ -48,9 +48,7 @@ export default function TextModelCanvas() {
                     <TextToModel text="</>" size={0.7} thickness={0.2} scaleY={1} scaleX={1} rotateX={false} rotateY={false} />
                     <AsciiRenderer
                         fgColor="#FEA84E"
-                        bgColor="transparent"
                         characters=" .:-+*=%@#"
-                        resolution={0.333}
                     />
                 </Canvas>
             </div>
