@@ -1,8 +1,9 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { AsciiRenderer } from "@react-three/drei";
 import { useState, useEffect } from "react";
+import * as THREE from "three";
 
 import TextToModel from "./TextToModel";
 
@@ -17,6 +18,21 @@ function CameraOrbiter() {
         camera.position.y = 0.111;
         camera.lookAt(0, 0, 0);
     });
+
+    return null;
+}
+
+function CameraAspectRatioCompensator({ characterAspectRatio = 2.0 }: { characterAspectRatio?: number }) {
+    const { camera, size } = useThree();
+
+    useEffect(() => {
+        if (camera instanceof THREE.PerspectiveCamera) {
+            const baseAspect = size.width / size.height;
+            const adjustedAspect = baseAspect / characterAspectRatio;
+            camera.aspect = adjustedAspect;
+            camera.updateProjectionMatrix();
+        }
+    }, [camera, size.width, size.height, characterAspectRatio]);
 
     return null;
 }
@@ -41,9 +57,10 @@ export default function TextModelCanvas() {
                 }}>
                     <color attach="background" args={['black']} />
                     <ambientLight intensity={0.5} />
-                    <directionalLight position={[50, 30, 50]} intensity={7} />
-                    <directionalLight position={[-50, 30, -50]} intensity={5} />
+                    <directionalLight position={[50, 30, 50]} intensity={2} />
+                    <directionalLight position={[-50, 30, -50]} intensity={3} />
                     <CameraOrbiter />
+                    <CameraAspectRatioCompensator characterAspectRatio={1} />
                     <TextToModel text="</>" size={1} thickness={0.2} scaleY={1} scaleX={1} rotateX={false} rotateY={false} />
                     <AsciiRenderer
                         fgColor="#FEA84E"
