@@ -57,7 +57,7 @@ function TextModel({ text, font, size = 0.5, thickness = 0.1, rotateY = true, ro
             >
                 <Text3D
                     ref={textRef}
-                    font={font || '/fonts/futura.json'}
+                    font={font || '/fonts/iosevka.json'}
                     size={size}
                     height={thickness}
                     curveSegments={32}
