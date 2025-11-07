@@ -44,11 +44,12 @@ export default function TextModelCanvas() {
                     <directionalLight position={[50, 30, 50]} intensity={7} />
                     <directionalLight position={[-50, 30, -50]} intensity={5} />
                     <CameraOrbiter />
-                    <TextToModel text="</>" size={1} thickness={0.2} scaleY={1} scaleX={1} rotateX={false} rotateY={false} />
+                    <TextToModel text="Ω" size={1} thickness={0.2} scaleY={1} scaleX={1.5} rotateX={false} rotateY={false} />
                     <AsciiRenderer
                         fgColor="#FEA84E"
                         bgColor="transparent"
                         characters=" .:-+*=%@#"
+                        resolution={0.5}
                     />
                 </Canvas>
             </div>

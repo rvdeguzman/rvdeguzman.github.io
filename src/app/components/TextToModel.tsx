@@ -57,7 +57,7 @@ function TextModel({ text, font, size = 0.5, thickness = 0.1, rotateY = true, ro
             >
                 <Text3D
                     ref={textRef}
-                    font={font || '/fonts/iosevka.json'}
+                    font={font || '/fonts/futura.json'}
                     size={size}
                     height={thickness}
                     curveSegments={32}
@@ -77,7 +77,7 @@ function TextModel({ text, font, size = 0.5, thickness = 0.1, rotateY = true, ro
 
 export default function TextToModel({ scale = 1, scaleY = 1, scaleX = 1, ...props }: TextToModelProps & { scale?: number; scaleY?: number }) {
     return (
-        <group scale={[scale, scale * scaleY, scale * scaleX]}>
+        <group scale={[scale * scaleX, scale * scaleY, scale]}>
             <Suspense fallback={null}>
                 <TextModel {...props} />
             </Suspense>
