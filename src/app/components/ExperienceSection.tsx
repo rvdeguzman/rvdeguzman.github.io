@@ -15,11 +15,12 @@ export default function ExperienceSection({ experiences }: { experiences: Experi
                             {
                                 experiences.map((exp, idx) => (
                                     <div key={idx} className="relative pl-24">
-                                        <div className="absolute left-0 w-8 h-8 rounded-full border-2 overflow-hidden flex items-center justify-center p-1" style={{ borderColor: 'var(--line)', backgroundColor: 'var(--visual)' }}>
+                                        <div className="absolute left-0 w-8 h-8 rounded-full border-2 overflow-hidden flex items-center justify-center p-1" style={{ borderColor: 'var(--line)', backgroundColor: 'var(--background)' }}>
                                             <img
                                                 src={exp.icon}
                                                 alt={`${exp.company} logo`}
                                                 className="w-full h-full object-contain"
+                                                style={{ backgroundColor: 'var(--background)'}}
                                             />
                                         </div>
                                         <div>
