@@ -6,7 +6,6 @@ import { useRouter, usePathname } from "next/navigation";
 const tabsData = [
     { label: "about", href: "/" },
     { label: "posts", href: "/posts" },
-    { label: "misc", href: "/misc" },
 ];
 
 const Header = () => {
