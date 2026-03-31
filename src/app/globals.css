@@ -57,11 +57,6 @@
   }
 }
 
-/* PS2 aesthetic: all lowercase */
-* {
-  text-transform: lowercase;
-}
-
 body {
   background: #050508;
   color: var(--foreground);
@@ -184,7 +179,7 @@ h3[style*="--after-color"]::after {
 
 .ps2-glass {
   position: relative;
-  background: rgba(200, 200, 200, 0.05);
+  background: rgba(40, 40, 40, 0.025);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   border: none;

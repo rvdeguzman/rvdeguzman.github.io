@@ -23,5 +23,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "triho", "ps2-orbs", "altezzadev.github.io"]
+  "exclude": ["node_modules", "ps2-orbs", "altezzadev.github.io"]
 }
