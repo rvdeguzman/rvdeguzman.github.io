@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { WaveGrid } from "./components/WaveGrid";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,8 +31,11 @@ export default function RootLayout({
                 suppressHydrationWarning={true}
             >
                 <ThemeProvider enableSystem={false} attribute="class">
-                    <main className="min-h-screen bg-white dark:bg-black">
-                        {children}
+                    <main className="min-h-screen relative bg-transparent">
+                        <WaveGrid />
+                        <div className="relative" style={{ zIndex: 1 }}>
+                            {children}
+                        </div>
                     </main>
                 </ThemeProvider>
             </body>

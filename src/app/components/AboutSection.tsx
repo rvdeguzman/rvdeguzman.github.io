@@ -10,12 +10,12 @@ export default function AboutSection({ about }: { about: About | null }) {
             <section className="lg:w-1/2">
                 {about ? (
                     <>
-                        <h1 className="text-3xl font-bold about">{about.title}</h1>
+                        <h1 className="text-3xl font-bold about ps2-glow-heading">{about.title}</h1>
                         <h2 className="text-2xl" style={{ color: 'var(--property)' }}>{about.description}</h2>
-                        <p className="leading-relaxed mb-4" style={{ color: 'var(--comment)' }}>
+                        <p className="leading-relaxed mb-4 text-sm" style={{ color: 'var(--comment)' }}>
                             {about.location} | {about.email}
                         </p>
-                        <div className="leading-relaxed prose prose-gray text-justify dark:prose-invert max-w-none" style={{ color: 'var(--comment)' }}>
+                        <div className="leading-relaxed prose prose-gray text-justify dark:prose-invert max-w-none text-sm" style={{ color: 'var(--comment)' }}>
                             {about.content.split('\n').map((line, idx) => (
                                 line.trim() ? <p key={idx} className="mb-4">{line}</p> : null
                             ))}
@@ -28,7 +28,7 @@ export default function AboutSection({ about }: { about: About | null }) {
                                 className="social-icon"
                                 style={{ color: 'var(--comment)' }}
                             >
-                                <FaLinkedin size={24} />
+                                <FaLinkedin size={22} />
                             </a>
                             <a
                                 href="https://github.com/rvdeguzman"
@@ -37,7 +37,7 @@ export default function AboutSection({ about }: { about: About | null }) {
                                 className="social-icon"
                                 style={{ color: 'var(--comment)' }}
                             >
-                                <FaGithub size={24} />
+                                <FaGithub size={22} />
                             </a>
                             <a
                                 href="/rvdeguzman_cv.pdf"
@@ -46,13 +46,13 @@ export default function AboutSection({ about }: { about: About | null }) {
                                 className="social-icon"
                                 style={{ color: 'var(--comment)' }}
                             >
-                                <FaFileDownload size={24} />
+                                <FaFileDownload size={22} />
                             </a>
                         </div>
                     </>
                 ) : (
                     <>
-                        <h1 className="text-3xl font-bold mb-4">About Me</h1>
+                        <h1 className="text-3xl font-bold mb-4 ps2-glow-heading">about me</h1>
                         <p className="leading-relaxed" style={{ color: 'var(--comment)' }}>
                             ...
                         </p>

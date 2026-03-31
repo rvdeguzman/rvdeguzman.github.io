@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'Iosevka';
-  src: url('/fonts/iosevka/Iosevka-Regular.woff2') format('woff2');
+  font-family: "Iosevka";
+  src: url("/fonts/iosevka/Iosevka-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Iosevka';
-  src: url('/fonts/iosevka/Iosevka-Bold.woff2') format('woff2');
+  font-family: "Iosevka";
+  src: url("/fonts/iosevka/Iosevka-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -40,13 +40,14 @@
   --search: #405065;
   --plus: #7fa563;
   --delta: #f3be7c;
+  --glow: #fbcb97;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Iosevka', sans-serif;
-  --font-mono: 'Iosevka', monospace;
+  --font-sans: "Iosevka", sans-serif;
+  --font-mono: "Iosevka", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -56,55 +57,309 @@
   }
 }
 
+/* PS2 aesthetic: all lowercase */
+* {
+  text-transform: lowercase;
+}
+
 body {
-  background: var(--background);
+  background: #050508;
   color: var(--foreground);
-  font-family: 'Iosevka', sans-serif;
+  font-family: "Iosevka", sans-serif;
   overflow-y: scroll;
 }
 
 .about {
-    color: var(--accent1);
+  color: var(--accent1);
 }
 
 a.social-icon {
-    transition: color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    text-shadow 0.3s ease;
 }
 
 a.social-icon:nth-child(1):hover {
-    color: var(--hint) !important;
+  color: var(--hint) !important;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--hint) 40%, transparent);
 }
 
 a.social-icon:nth-child(2):hover {
-    color: var(--search) !important;
+  color: var(--search) !important;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--search) 40%, transparent);
 }
 
 a.social-icon:nth-child(3):hover {
-    color: var(--plus) !important;
+  color: var(--plus) !important;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--plus) 40%, transparent);
 }
 
 h2[style*="--after-color"]::after,
 h3[style*="--after-color"]::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 0.125rem;
-    width: 0;
-    background-color: var(--after-color, var(--hover-color));
-    transition: width 0.3s ease;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0.125rem;
+  width: 0;
+  background-color: var(--after-color, var(--hover-color));
+  transition: width 0.3s ease;
 }
 
 .group:has(a:hover) h2[style*="--after-color"]::after,
 .group:hover h2[style*="--after-color"]::after,
 .group:has(a:hover) h3[style*="--after-color"]::after,
 .group:hover h3[style*="--after-color"]::after {
-    width: 100%;
+  width: 100%;
 }
 
 .group:has(a:hover) h2,
 .group:hover h2,
 .group:has(a:hover) h3,
 .group:hover h3 {
-    color: var(--after-color, var(--hover-color)) !important;
+  color: var(--after-color, var(--hover-color)) !important;
+}
+
+/* ─── PS2 Animations ─── */
+
+@keyframes ps2-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ps2-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── PS2 Corner Brackets ─── */
+
+.ps2-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+
+.ps2-corner-tl {
+  top: 0;
+  left: 0;
+  border-top: 1.5px solid currentColor;
+  border-left: 1.5px solid currentColor;
+}
+
+.ps2-corner-tr {
+  top: 0;
+  right: 0;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+}
+
+.ps2-corner-bl {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1.5px solid currentColor;
+  border-left: 1.5px solid currentColor;
+}
+
+.ps2-corner-br {
+  bottom: 0;
+  right: 0;
+  border-bottom: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+}
+
+/* ─── Frosted Glass Panel ─── */
+
+.ps2-glass {
+  position: relative;
+  background: rgba(200, 200, 200, 0.05);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: none;
+  border-radius: 4px;
+}
+
+/* ─── Glow Effects ─── */
+
+.ps2-glow-heading {
+  text-shadow:
+    0 0 12px color-mix(in srgb, var(--accent1) 35%, transparent),
+    0 0 24px color-mix(in srgb, var(--accent1) 12%, transparent);
+}
+
+.ps2-glow-hover {
+  transition:
+    color 0.25s ease,
+    text-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+
+.ps2-glow-hover:hover {
+  text-shadow:
+    0 0 10px
+      color-mix(in srgb, var(--glow-color, var(--accent1)) 40%, transparent),
+    0 0 20px
+      color-mix(in srgb, var(--glow-color, var(--accent1)) 15%, transparent);
+}
+
+/* ─── PS2 Section Separator ─── */
+
+.ps2-separator {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--line) 20%,
+    var(--line) 80%,
+    transparent
+  );
+}
+
+/* ─── PS2 Card (project cards, post cards) ─── */
+
+.ps2-card {
+  position: relative;
+  padding: 1.25rem;
+  background: transparent;
+  border: none;
+  transition: box-shadow 0.3s ease;
+}
+
+.ps2-card:hover {
+  box-shadow: 0 0 20px
+    color-mix(in srgb, var(--hover-color, var(--accent1)) 8%, transparent);
+}
+
+.ps2-card .ps2-corner {
+  color: var(--line);
+  transition: color 0.3s ease;
+}
+
+.ps2-card:hover .ps2-corner {
+  color: color-mix(
+    in srgb,
+    var(--hover-color, var(--accent1)) 60%,
+    transparent
+  );
+}
+
+/* ─── PS2 Tag ─── */
+
+.ps2-tag {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--comment);
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.ps2-card:hover .ps2-tag {
+  border-color: color-mix(
+    in srgb,
+    var(--hover-color, var(--accent1)) 30%,
+    transparent
+  );
+  color: var(--property);
+}
+
+/* ─── PS2 Timeline ─── */
+
+.ps2-timeline-line {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--line) 10%,
+    var(--line) 90%,
+    transparent
+  );
+}
+
+/* ─── PS2 Post Item ─── */
+
+.ps2-post {
+  position: relative;
+  border-left: 2px solid var(--line);
+  padding-left: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.ps2-post:hover {
+  border-left-color: var(--accent1);
+}
+
+.ps2-post:hover .ps2-post-title {
+  color: var(--accent1);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--accent1) 35%, transparent);
+}
+
+/* ─── PS2 Nav ─── */
+
+.ps2-nav-item {
+  position: relative;
+  transition:
+    color 0.25s ease,
+    text-shadow 0.25s ease;
+}
+
+.ps2-nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--accent1);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--accent1) 50%, transparent);
+  transition: width 0.3s ease;
+}
+
+.ps2-nav-item:hover::after,
+.ps2-nav-item.active::after {
+  width: 100%;
+}
+
+.ps2-nav-item:hover,
+.ps2-nav-item.active {
+  color: var(--accent1);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--accent1) 30%, transparent);
+}
+
+/* ─── PS2 Help Bar (keyboard hints) ─── */
+
+.ps2-help-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.7rem;
+  color: #4a4a5e;
+  letter-spacing: 0.04em;
+}
+
+.ps2-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3em;
+  height: 1.3em;
+  padding: 0 0.2em;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-size: 0.85em;
+  line-height: 1;
 }
