@@ -65,13 +65,7 @@ type OrbPalette = {
   trail: THREE.Color;
 };
 
-function Orb({
-  palette,
-  size,
-}: {
-  palette: OrbPalette;
-  size: number;
-}) {
+function Orb({ palette, size }: { palette: OrbPalette; size: number }) {
   return (
     <Trail
       width={10}
@@ -350,7 +344,9 @@ function Scene({
 }) {
   return (
     <>
-      <color attach="background" args={[background]} />
+      {background !== "transparent" && (
+        <color attach="background" args={[background]} />
+      )}
       <OrbSystem
         palette={palette}
         speed={speed}
@@ -597,7 +593,7 @@ export function PS2Orbs({
       <Canvas
         camera={{ position: [0, 0, cameraZ], fov: BASE_CAMERA_FOV }}
         dpr={[1, 2]}
-        gl={{ alpha: false, antialias: true }}
+        gl={{ alpha: true, antialias: true }}
       >
         <Scene
           background={background}

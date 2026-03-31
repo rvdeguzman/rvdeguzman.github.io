@@ -6,20 +6,24 @@ import Tag from "./Tag";
 export default function ProjectCard({ projects }: { projects: Project[] }) {
     return (
         <section>
-            <h2 className="text-2xl font-semibold mb-4">Projects</h2>
+            <h2 className="text-xl font-semibold mb-4 ps2-glow-heading" style={{ color: 'var(--accent1)' }}>projects</h2>
             <div className="grid gap-4 md:grid-cols-2">
                 {projects.map((project, idx) => (
                     <div
                         key={idx}
-                        className="p-4 border rounded-lg text-justify cursor-pointer transition-all duration-200 hover:shadow-lg group"
+                        className="ps2-card cursor-pointer group"
                         onClick={() => project.url && window.open(project.url, '_blank')}
-                        style={{ '--hover-color': project.color, borderColor: 'var(--line)' } as React.CSSProperties}
+                        style={{ '--hover-color': project.color } as React.CSSProperties}
                     >
-                        <h3 className="font-medium mb-2 inline-block relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-[var(--hover-color)] after:transition-all after:duration-300 group-hover:after:w-full transition-colors group-hover:text-[var(--hover-color)]">{project.title}</h3>
-                        <p className="text-sm mb-3" style={{ color: 'var(--comment)' }}>
+                        <span className="ps2-corner ps2-corner-tl" />
+                        <span className="ps2-corner ps2-corner-tr" />
+                        <span className="ps2-corner ps2-corner-bl" />
+                        <span className="ps2-corner ps2-corner-br" />
+                        <h3 className="font-medium mb-2 text-sm transition-colors duration-300 group-hover:text-[var(--hover-color)]">{project.title}</h3>
+                        <p className="text-xs mb-3" style={{ color: 'var(--comment)' }}>
                             {project.description}
                         </p>
-                        <div className="flex gap-2 text-xs">
+                        <div className="flex flex-wrap gap-2">
                             {project.tags.map((tag, tagIdx) => (
                                 <Tag key={tagIdx} text={tag} />
                             ))}

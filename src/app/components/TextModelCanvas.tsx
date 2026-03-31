@@ -5,11 +5,12 @@ import { PS2Orbs } from "./PS2Orbs";
 export default function TextModelCanvas() {
   return (
     <div className="flex h-full w-full min-h-0 items-center justify-center">
-      <div className="aspect-square h-full w-full overflow-hidden rounded-xl bg-black">
+      <div className="aspect-square h-full w-full overflow-hidden rounded-xl" style={{ background: 'transparent' }}>
         <PS2Orbs
           mode="ascii"
           resolution={1}
           orbSize={1.6}
+          background="transparent"
           palette={{
             fg: "#ffffff",
             core: "#ffffff",

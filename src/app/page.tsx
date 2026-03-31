@@ -11,8 +11,8 @@ import { getAbout } from "../lib/about";
 import { getExperiences } from "../lib/experiences";
 import { getEducation } from "../lib/education";
 
-const fadeInStyle = (delay: number) => ({
-    animation: `fadeIn 0.6s ease-in-out ${delay}s both`,
+const slideIn = (delay: number) => ({
+    animation: `ps2-slide-in 0.4s ease ${delay}s both`,
 });
 
 export default function Home() {
@@ -24,54 +24,39 @@ export default function Home() {
 
     return (
         <div className="min-h-screen">
-            <style>{`
-                @keyframes fadeIn {
-                    from {
-                        opacity: 0;
-                        transform: translateY(10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-            `}</style>
             <Header />
             <main className="max-w-3xl mx-auto px-8 py-8 pt-0">
-                <div className="space-y-8">
-                    <div style={fadeInStyle(0)} className="mb-0">
+                <div className="ps2-glass p-6 md:p-8 space-y-8">
+                    <div style={slideIn(0)} className="mb-0">
                         <AboutSection about={about} />
                     </div>
-                    <div style={fadeInStyle(0.1)}>
+                    <div style={slideIn(0.08)}>
                         <Separator />
                     </div>
 
-                    <div style={fadeInStyle(0.2)}>
+                    <div style={slideIn(0.14)}>
                         <ExperienceSection experiences={experiences} />
                     </div>
-                    <div style={fadeInStyle(0.3)}>
+                    <div style={slideIn(0.2)}>
                         <Separator />
                     </div>
 
-                    <div style={fadeInStyle(0.4)}>
+                    <div style={slideIn(0.26)}>
                         <EducationSection education={education} />
                     </div>
-                    <div style={fadeInStyle(0.5)}>
+                    <div style={slideIn(0.32)}>
                         <Separator />
                     </div>
 
-                    <div style={fadeInStyle(0.6)}>
+                    <div style={slideIn(0.38)}>
                         <ProjectCard projects={projects} />
                     </div>
-                    <div style={fadeInStyle(0.7)}>
+                    <div style={slideIn(0.44)}>
                         <Separator />
                     </div>
 
-                    <div style={fadeInStyle(0.8)}>
+                    <div style={slideIn(0.5)}>
                         <PostsSection posts={posts} />
-                    </div>
-                    <div style={fadeInStyle(0.9)}>
-                        <Separator />
                     </div>
                 </div>
             </main>

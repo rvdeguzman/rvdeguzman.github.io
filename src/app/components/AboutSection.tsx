@@ -5,64 +5,71 @@ import { About } from "@/lib/about";
 import { FaLinkedin, FaGithub, FaFileDownload } from "react-icons/fa";
 
 export default function AboutSection({ about }: { about: About | null }) {
-    return (
-        <div className="flex flex-col lg:flex-row lg:items-stretch lg:min-h-0 lg:gap-8">
-            <section className="lg:w-1/2">
-                {about ? (
-                    <>
-                        <h1 className="text-3xl font-bold about">{about.title}</h1>
-                        <h2 className="text-2xl" style={{ color: 'var(--property)' }}>{about.description}</h2>
-                        <p className="leading-relaxed mb-4" style={{ color: 'var(--comment)' }}>
-                            {about.location} | {about.email}
-                        </p>
-                        <div className="leading-relaxed prose prose-gray text-justify dark:prose-invert max-w-none" style={{ color: 'var(--comment)' }}>
-                            {about.content.split('\n').map((line, idx) => (
-                                line.trim() ? <p key={idx} className="mb-4">{line}</p> : null
-                            ))}
-                        </div>
-                        <div className="flex gap-4 mb-4">
-                            <a
-                                href="https://linkedin.com/in/rvdeguzman"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-icon"
-                                style={{ color: 'var(--comment)' }}
-                            >
-                                <FaLinkedin size={24} />
-                            </a>
-                            <a
-                                href="https://github.com/rvdeguzman"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-icon"
-                                style={{ color: 'var(--comment)' }}
-                            >
-                                <FaGithub size={24} />
-                            </a>
-                            <a
-                                href="/rvdeguzman_cv.pdf"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-icon"
-                                style={{ color: 'var(--comment)' }}
-                            >
-                                <FaFileDownload size={24} />
-                            </a>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <h1 className="text-3xl font-bold mb-4">About Me</h1>
-                        <p className="leading-relaxed" style={{ color: 'var(--comment)' }}>
-                            ...
-                        </p>
-                    </>
-                )}
-            </section>
-
-            <div className="lg:w-2/4 mt-8 lg:mt-0 flex justify-end">
-                <TextModelWrapper />
+  return (
+    <div className="flex flex-col lg:flex-row lg:items-stretch lg:min-h-0 lg:gap-8">
+      <section className="lg:w-1/2">
+        {about ? (
+          <>
+            <h1 className="text-3xl font-bold about ps2-glow-heading">
+              {about.title}
+            </h1>
+            <h2 className="text-2xl" style={{ color: "var(--property)" }}>
+              {about.description}
+            </h2>
+            <p
+              className="leading-relaxed mb-4 text-sm"
+              style={{ color: "var(--comment)" }}
+            >
+              {about.location} | {about.email}
+            </p>
+            <div
+              className="leading-relaxed prose prose-gray text-justify dark:prose-invert max-w-none text-sm"
+              style={{ color: "var(--comment)" }}
+            >
+              {about.content.split("\n").map((line, idx) =>
+                line.trim() ? (
+                  <p key={idx} className="mb-4">
+                    {line}
+                  </p>
+                ) : null,
+              )}
             </div>
-        </div>
-    );
+            <div className="flex gap-4 mb-4">
+              <a
+                href="https://linkedin.com/in/rvdeguzman"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+                style={{ color: "var(--comment)" }}
+              >
+                <FaLinkedin size={22} />
+              </a>
+              <a
+                href="https://github.com/rvdeguzman"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+                style={{ color: "var(--comment)" }}
+              >
+                <FaGithub size={22} />
+              </a>
+            </div>
+          </>
+        ) : (
+          <>
+            <h1 className="text-3xl font-bold mb-4 ps2-glow-heading">
+              about me
+            </h1>
+            <p className="leading-relaxed" style={{ color: "var(--comment)" }}>
+              ...
+            </p>
+          </>
+        )}
+      </section>
+
+      <div className="lg:w-2/4 mt-8 lg:mt-0 flex justify-end">
+        <TextModelWrapper />
+      </div>
+    </div>
+  );
 }

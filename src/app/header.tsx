@@ -9,7 +9,6 @@ const tabsData = [
 ];
 
 const Header = () => {
-    const [hoveredTab, setHoveredTab] = useState<number | null>(null);
     const router = useRouter();
     const pathname = usePathname();
     const [lastKeyTime, setLastKeyTime] = useState<{ [key: string]: number }>({});
@@ -41,7 +40,6 @@ const Header = () => {
                 return;
             }
 
-            // vim motionssss
             switch (e.key) {
                 case 'j':
                     e.preventDefault();
@@ -77,31 +75,34 @@ const Header = () => {
     return (
         <div className="w-full flex flex-col justify-center px-8">
             <nav className="flex items-center justify-between w-full max-w-3xl mx-auto px-8 py-8">
-                <div className="relative flex gap-4">
+                <div className="relative flex gap-6">
                     {tabsData.map((tab, idx) => (
                         <Link
                             key={idx}
                             href={tab.href}
-                            className="relative inline-block text-gray-400 transition-colors duration-200"
+                            className={`ps2-nav-item inline-block text-sm tracking-wide ${getCurrentTabIndex() === idx ? 'active font-bold' : ''}`}
                             style={{
-                                color: hoveredTab === idx || getCurrentTabIndex() === idx ? 'var(--accent1)' : undefined,
-                                fontWeight: getCurrentTabIndex() === idx ? 'bold' : undefined,
-                            } as React.CSSProperties}
-                            onMouseEnter={() => setHoveredTab(idx)}
-                            onMouseLeave={() => setHoveredTab(null)}
+                                color: getCurrentTabIndex() === idx ? 'var(--accent1)' : 'var(--comment)',
+                            }}
                         >
                             {tab.label}
-                            <span
-                                className="absolute bottom-0 left-0 h-0.5 bg-[var(--accent1)] transition-all duration-300"
-                                style={{
-                                    width: getCurrentTabIndex() === idx || hoveredTab === idx ? '100%' : '0%'
-                                }}
-                            />
                         </Link>
                     ))}
                 </div>
+                <div className="ps2-help-bar">
+                    <span className="flex items-center gap-1">
+                        <span className="ps2-key">h</span>
+                        <span className="ps2-key">l</span>
+                        <span className="ml-0.5">nav</span>
+                    </span>
+                    <span className="flex items-center gap-1">
+                        <span className="ps2-key">j</span>
+                        <span className="ps2-key">k</span>
+                        <span className="ml-0.5">scroll</span>
+                    </span>
+                </div>
             </nav>
-        </div >
+        </div>
     );
 };
 
