@@ -8,7 +8,10 @@ import { useEffect, useRef } from "react";
     - the ring coin-spins about the hour-hand axis at 52/3 turns/min (free-running)
     - orb i rides the ring at (21 + i) turns/min from the hour point, so all
       seven meet on the hour hand at :00 and bunch into 60/gcd(s, 60) groups
-    - the ring grows from 60% to 100% over the hour */
+    - the ring grows from 60% to 100% over the hour
+   Departure from the PS2: instead of growing over the hour, the ring breathes
+   between 75% and 100% on a 2-minute sine, smallest at the start of even
+   minutes and largest at the start of odd ones. */
 
 const TAU = Math.PI * 2;
 const ORBS = 7;
@@ -32,7 +35,8 @@ function orbPositions(ms: number): Point[] {
     const ax = Math.sin(H), ay = Math.cos(H); // toward the hour point
     const bx = Math.cos(H), by = -Math.sin(H); // clockwise along the ring
     const psi = (TAU * SPIN * ms) / 60000; // coin spin, not locked to the minute
-    const radius = 0.6 + 0.4 * (minuteOfHour / 60);
+    const breath = ((d.getMinutes() % 2) * 60 + s) / 120; // 0..1 over two minutes
+    const radius = 0.875 - 0.125 * Math.cos(TAU * breath);
     return Array.from({ length: ORBS }, (_, i) => {
         const th = (TAU * (RIDE + i) * s) / 60;
         const along = Math.cos(th);
