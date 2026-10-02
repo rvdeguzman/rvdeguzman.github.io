@@ -30,12 +30,6 @@ export const SCHEMES = {
         kw: "#ea6962", str: "#a9b665", num: "#d3869b", type: "#d8a657", fn: "#89b482",
         orb: "#d8a657",
     },
-    "gruvbox-light": {
-        bg: "#fbf1c7", bg1: "#f4e8be", line: "#e5d5ad", plus: "#e8dab3",
-        fg: "#654735", muted: "#7c6f64", dim: "#a89984",
-        kw: "#c14a4a", str: "#6c782e", num: "#945e80", type: "#b47109", fn: "#4c7a5d",
-        orb: "#b47109", light: true,
-    },
     miasma: {
         bg: "#222222", bg1: "#1c1c1c", line: "#333333", plus: "#2f2f2f",
         fg: "#c2c2b0", muted: "#929283", dim: "#666666",

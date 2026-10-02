@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getNowWithHtml } from "../../lib/now";
 import { getPlaylist } from "../../lib/playlist";
 import NowPlaying from "../components/NowPlaying";
-import Orbs from "../components/Orbs";
+import ClockOrbs from "../components/ClockOrbs";
 
 export const metadata: Metadata = {
   title: "now · rv",
@@ -28,7 +28,7 @@ export default async function NowPage() {
           {tracks.length > 0 && <NowPlaying tracks={tracks} />}
         </div>
         <div aria-hidden="true">
-          <Orbs />
+          <ClockOrbs />
         </div>
       </header>
       <article
