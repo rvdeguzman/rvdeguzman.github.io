@@ -1,17 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import Header from "./header";
+import EdgeTrim from "./components/EdgeTrim";
+import { DEFAULT_SCHEME, SCHEME_NAMES, schemesCss } from "../lib/colorschemes";
 import "./globals.css";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
     title: "rv",
@@ -24,15 +16,28 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-                suppressHydrationWarning={true}
-            >
-                <ThemeProvider enableSystem={false} attribute="class">
-                    <main className="min-h-screen bg-white dark:bg-black">
-                        {children}
-                    </main>
+        <html lang="en" suppressHydrationWarning>
+            <head>
+                <style dangerouslySetInnerHTML={{ __html: schemesCss() }} />
+            </head>
+            <body className="antialiased">
+                <ThemeProvider
+                    attribute="data-theme"
+                    themes={SCHEME_NAMES}
+                    defaultTheme={DEFAULT_SCHEME}
+                    storageKey="site-colorscheme"
+                    enableSystem={false}
+                    disableTransitionOnChange
+                >
+                    <div className="site">
+                        <div className="site-inner">
+                            <Header />
+                            {children}
+                            <footer className="site-footer">
+                                <EdgeTrim edge="bottom">mnl 2 mtl</EdgeTrim>
+                            </footer>
+                        </div>
+                    </div>
                 </ThemeProvider>
             </body>
         </html>

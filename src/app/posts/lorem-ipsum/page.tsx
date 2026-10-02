@@ -1,9 +1,6 @@
-import Header from "../../header";
-
 export default function LoremIpsum() {
     return (
         <div className="min-h-screen">
-            <Header />
             <main className="max-w-2xl mx-auto px-8 py-8">
                 <article className="prose prose-gray dark:prose-invert max-w-none">
                     <h1 className="text-3xl font-bold mb-4">Lorem ipsum</h1>

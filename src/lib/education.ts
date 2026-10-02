@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkHtml from 'remark-html';
+import { bySpan, parseTerm, spanLabel, type Term } from './terms';
 
 const educationDirectory = path.join(process.cwd(), 'src/content/education');
 
@@ -19,14 +20,23 @@ export interface Education {
     degree: string;
     major: string;
     location: string;
-    startDate: string;
-    endDate: string | null;
-    dateLabel: string;
+    start: Term;
+    end: Term | null; // null = ongoing
+    dates: string; // "f25 - now"
     icon: string;
     tags: string[];
     subsections: Subsection[];
     content: string;
     htmlContent?: string;
+}
+
+/** `start` (required) and optional `end` from frontmatter; no end = ongoing.
+    Older files with startDate / endDate still work. */
+function span(data: Record<string, unknown>, slug: string) {
+    const start = parseTerm(data.start ?? data.startDate, `education/${slug} start`);
+    if (!start) throw new Error(`education/${slug}: missing start (e.g. start: f25)`);
+    const end = parseTerm(data.end ?? data.endDate, `education/${slug} end`);
+    return { start, end, dates: spanLabel(start, end) };
 }
 
 async function markdownToHtml(markdown: string): Promise<string> {
@@ -57,20 +67,14 @@ export function getEducation(): Education[] {
                 degree: data.degree,
                 major: data.major,
                 location: data.location,
-                startDate: data.startDate,
-                endDate: data.endDate || null,
-                dateLabel: data.dateLabel,
+                ...span(data, slug),
                 icon: data.icon,
                 tags: data.tags || [],
                 subsections: data.subsections || [],
                 content,
             };
         })
-        .sort((a, b) => {
-            const aDate = new Date(a.endDate || a.startDate).getTime();
-            const bDate = new Date(b.endDate || b.startDate).getTime();
-            return bDate - aDate;
-        });
+        .sort(bySpan);
 
     return education;
 }
@@ -87,9 +91,7 @@ export function getEducationItem(slug: string): Education | null {
             degree: data.degree,
             major: data.major,
             location: data.location,
-            startDate: data.startDate,
-            endDate: data.endDate || null,
-            dateLabel: data.dateLabel,
+            ...span(data, slug),
             icon: data.icon,
             tags: data.tags || [],
             subsections: data.subsections || [],

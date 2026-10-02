@@ -1,5 +1,3 @@
-import Header from "../header";
-
 const fadeInStyle = (delay: number) => ({
     animation: `fadeIn 0.6s ease-in-out ${delay}s both`,
 });
@@ -19,7 +17,6 @@ export default function Misc() {
                     }
                 }
             `}</style>
-            <Header />
             <main className="max-w-2xl mx-auto px-8 py-8 pt-0">
                 <div style={fadeInStyle(0)}>
                     <h1 className="text-3xl font-bold mb-4">Misc</h1>

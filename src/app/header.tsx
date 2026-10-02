@@ -1,108 +1,101 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+
+import { useEffect, useRef, useCallback, useState } from "react";
 import Link from "next/link";
+import EdgeTrim from "./components/EdgeTrim";
 import { useRouter, usePathname } from "next/navigation";
 
-const tabsData = [
-    { label: "about", href: "/" },
-    { label: "posts", href: "/posts" },
+const tabs = [
+  { label: "about", href: "/" },
+  { label: "now", href: "/now" },
+  { label: "posts", href: "/posts" },
 ];
 
-const Header = () => {
-    const [hoveredTab, setHoveredTab] = useState<number | null>(null);
-    const router = useRouter();
-    const pathname = usePathname();
-    const [lastKeyTime, setLastKeyTime] = useState<{ [key: string]: number }>({});
+function tabIndex(pathname: string) {
+  const exact = tabs.findIndex((t) => t.href === pathname);
+  if (exact !== -1) return exact;
+  return tabs.findIndex((t) => t.href !== "/" && pathname.startsWith(t.href));
+}
 
-    const getCurrentTabIndex = useCallback(() => {
-        let index = tabsData.findIndex((tab) => tab.href === pathname);
+const fmt = (d: Date) =>
+  d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false });
 
-        if (index === -1) {
-            index = tabsData.findIndex((tab) => {
-                if (tab.href === "/") return false;
-                return pathname.startsWith(tab.href);
-            });
-        }
-        return index;
-    }, [pathname]);
+/* The visitor's local time, 24h. Renders a placeholder on the server and
+   ticks on each minute boundary. */
+function Clock() {
+  const [now, setNow] = useState<Date | null>(null);
 
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (document.activeElement?.tagName === 'INPUT' ||
-                document.activeElement?.tagName === 'TEXTAREA') {
-                return;
-            }
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      const d = new Date();
+      setNow(d);
+      timer = setTimeout(tick, 60_000 - (d.getSeconds() * 1000 + d.getMilliseconds()));
+    };
+    tick();
+    return () => clearTimeout(timer);
+  }, []);
 
-            const now = Date.now();
-            const lastTime = lastKeyTime[e.key] || 0;
-            const debounceDelay = 150;
+  return (
+    <time className="clock" dateTime={now?.toISOString()} suppressHydrationWarning>
+      {now ? fmt(now) : "--:--"}
+    </time>
+  );
+}
 
-            if (now - lastTime < debounceDelay) {
-                return;
-            }
+export default function Header() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const lastKey = useRef<Record<string, number>>({});
+  const active = tabIndex(pathname);
 
-            // vim motionssss
-            switch (e.key) {
-                case 'j':
-                    e.preventDefault();
-                    window.scrollBy({ top: 100, behavior: 'smooth' });
-                    setLastKeyTime(prev => ({ ...prev, [e.key]: now }));
-                    break;
-                case 'k':
-                    e.preventDefault();
-                    window.scrollBy({ top: -100, behavior: 'smooth' });
-                    setLastKeyTime(prev => ({ ...prev, [e.key]: now }));
-                    break;
-                case 'h':
-                    e.preventDefault();
-                    const currentIndex = getCurrentTabIndex();
-                    const prevIndex = currentIndex <= 0 ? tabsData.length - 1 : currentIndex - 1;
-                    router.push(tabsData[prevIndex].href);
-                    setLastKeyTime(prev => ({ ...prev, [e.key]: now }));
-                    break;
-                case 'l':
-                    e.preventDefault();
-                    const currentIndexL = getCurrentTabIndex();
-                    const nextIndex = currentIndexL >= tabsData.length - 1 ? 0 : currentIndexL + 1;
-                    router.push(tabsData[nextIndex].href);
-                    setLastKeyTime(prev => ({ ...prev, [e.key]: now }));
-                    break;
-            }
-        };
+  const go = useCallback(
+    (dir: 1 | -1) => {
+      const from = active === -1 ? 0 : active;
+      router.push(tabs[(from + dir + tabs.length) % tabs.length].href);
+    },
+    [active, router],
+  );
 
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [router, pathname, getCurrentTabIndex, lastKeyTime]);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement;
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
 
-    return (
-        <div className="w-full flex flex-col justify-center px-8">
-            <nav className="flex items-center justify-between w-full max-w-3xl mx-auto px-8 py-8">
-                <div className="relative flex gap-4">
-                    {tabsData.map((tab, idx) => (
-                        <Link
-                            key={idx}
-                            href={tab.href}
-                            className="relative inline-block text-gray-400 transition-colors duration-200"
-                            style={{
-                                color: hoveredTab === idx || getCurrentTabIndex() === idx ? 'var(--accent1)' : undefined,
-                                fontWeight: getCurrentTabIndex() === idx ? 'bold' : undefined,
-                            } as React.CSSProperties}
-                            onMouseEnter={() => setHoveredTab(idx)}
-                            onMouseLeave={() => setHoveredTab(null)}
-                        >
-                            {tab.label}
-                            <span
-                                className="absolute bottom-0 left-0 h-0.5 bg-[var(--accent1)] transition-all duration-300"
-                                style={{
-                                    width: getCurrentTabIndex() === idx || hoveredTab === idx ? '100%' : '0%'
-                                }}
-                            />
-                        </Link>
-                    ))}
-                </div>
-            </nav>
-        </div >
-    );
-};
+      const now = Date.now();
+      if (now - (lastKey.current[e.key] ?? 0) < 150) return;
 
-export default Header;
+      const actions: Record<string, () => void> = {
+        j: () => window.scrollBy({ top: 100, behavior: "smooth" }),
+        k: () => window.scrollBy({ top: -100, behavior: "smooth" }),
+        h: () => go(-1),
+        l: () => go(1),
+      };
+      const action = actions[e.key];
+      if (!action) return;
+      e.preventDefault();
+      lastKey.current[e.key] = now;
+      action();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [go]);
+
+  return (
+    <header className="top rise" style={{ "--i": 0 } as React.CSSProperties}>
+      <EdgeTrim edge="top">
+        <Link href="/" className="wordmark" aria-label="home">
+          <Clock />
+        </Link>
+      </EdgeTrim>
+      <nav className="nav">
+        {tabs.map((t, i) => (
+          <Link key={t.href} href={t.href} {...(i === active ? { "aria-current": "page" } : {})}>
+            {t.label}
+          </Link>
+        ))}
+      </nav>
+    </header>
+  );
+}

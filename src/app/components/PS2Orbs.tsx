@@ -5,20 +5,22 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, Trail } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import * as THREE from "three";
+import { getClockPose } from "./ps2Clock";
 
 const NUM_ORBS = 7;
-const TAU = Math.PI * 2;
 const DEFAULT_ASCII_RESOLUTION = 0.16;
 const BASE_CAMERA_Z = 14;
 const BASE_CAMERA_FOV = 45;
-const ANGLE_STEP = TAU / 60;
-const X_SPEED = Math.PI / 3;
-const Z_SPEED = (-Math.PI * 2) / 3;
-const X_ROTATION_ANGLES = [Math.PI / 2, Math.PI + Math.PI / 6, 0] as const;
-const CONTAINER_X_SPEED = 0.08;
-const CONTAINER_Y_SPEED = 0.16;
 const DEFAULT_FG_COLOR = "#88a7ff";
 const ASCII_CHARSET = " .,:;irs#9&@";
+const ASCII_SUPERSAMPLE = 4;
+const ASCII_HTML_CHARSET = [...ASCII_CHARSET].map(escapeHtml);
+const QUANTIZED_COLORS = Array.from({ length: 9 ** 3 }, (_, index) => {
+  const r = Math.floor(index / 81) * 32;
+  const g = Math.floor((index % 81) / 9) * 32;
+  const b = (index % 9) * 32;
+  return `rgb(${r}, ${g}, ${b})`;
+});
 const FALLBACK_CHAR_WIDTH_RATIO = 0.6;
 const DEFAULT_TRAIL_COLOR = new THREE.Color(0.06, 0.14, 0.42);
 const DEFAULT_CORE_COLOR = new THREE.Color(0.22, 0.46, 1.18);
@@ -41,6 +43,8 @@ export type PS2OrbsProps = {
   background?: THREE.ColorRepresentation;
   speed?: number;
   orbSize?: number;
+  /** Magnifies the scene inside the canvas without changing glyph density. */
+  cameraZoom?: number;
   palette?: {
     fg?: string;
     core?: THREE.ColorRepresentation;
@@ -54,6 +58,11 @@ export type PS2OrbsProps = {
     scale?: OrbitVector;
   };
   timeMs?: number;
+  /**
+   * Read like the PS2 clock: orbs merge on the hour hand at :00 and the
+   * orbit grows over the hour. Off keeps the free-drifting look.
+   */
+  faithful?: boolean;
   ascii?: boolean;
   asciiResolution?: number;
 };
@@ -65,13 +74,7 @@ type OrbPalette = {
   trail: THREE.Color;
 };
 
-function Orb({
-  palette,
-  size,
-}: {
-  palette: OrbPalette;
-  size: number;
-}) {
+function Orb({ palette, size }: { palette: OrbPalette; size: number }) {
   return (
     <Trail
       width={10}
@@ -121,18 +124,6 @@ function Orb({
   );
 }
 
-function clamp01(value: number) {
-  return Math.min(1, Math.max(0, value));
-}
-
-function normalize(value: number, start: number, end: number) {
-  return clamp01((value - start) / (end - start));
-}
-
-function lerp(start: number, end: number, alpha: number) {
-  return start + (end - start) * alpha;
-}
-
 function isFiniteNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
 }
@@ -156,12 +147,12 @@ function getAverageLuminance(r: number, g: number, b: number) {
   return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
 }
 
-function quantizeChannel(value: number) {
-  return Math.round(value / 32) * 32;
-}
-
 function getQuantizedColor(r: number, g: number, b: number) {
-  return `rgb(${quantizeChannel(r)}, ${quantizeChannel(g)}, ${quantizeChannel(b)})`;
+  return QUANTIZED_COLORS[
+    Math.round(r / 32) * 81 +
+      Math.round(g / 32) * 9 +
+      Math.round(b / 32)
+  ];
 }
 
 function escapeHtml(value: string) {
@@ -199,36 +190,20 @@ function getCharRatio() {
   return clamp(bounds.width / bounds.height, 0.4, 0.8);
 }
 
-function getCurrentHourRotationAngle(elapsedDaySeconds: number) {
-  const elapsedHours = (elapsedDaySeconds / 3_600) % 24;
-  const clockRotation =
-    elapsedHours < 12 ? elapsedHours * -30 : (elapsedHours - 12) * -30;
-
-  return (90 + clockRotation) * (Math.PI / 180);
-}
-
-function getXRotationAngle(secondsInMinute: number, currentMinute: number) {
-  const start = X_ROTATION_ANGLES[currentMinute % X_ROTATION_ANGLES.length];
-  const end = X_ROTATION_ANGLES[(currentMinute + 1) % X_ROTATION_ANGLES.length];
-
-  return (
-    X_SPEED * secondsInMinute +
-    lerp(start, end, normalize(secondsInMinute, 0, 60))
-  );
-}
-
 function OrbSystem({
   palette,
   speed,
   orbSize,
   orbit,
   timeMs,
+  faithful,
 }: {
   palette: OrbPalette;
   speed: number;
   orbSize: number;
   orbit: { radius: number; scale: OrbitVector };
   timeMs?: number;
+  faithful: boolean;
 }) {
   const containerRef = useRef<THREE.Group>(null);
   const orbRefs = useRef<(THREE.Group | null)[]>([]);
@@ -265,15 +240,7 @@ function OrbSystem({
       now = animatedTimeRef.current;
     }
 
-    const date = new Date(now);
-    const elapsedSeconds = now / 1_000;
-    const secondsInMinute = date.getSeconds() + date.getMilliseconds() / 1_000;
-    const secondsInHour = date.getMinutes() * 60 + secondsInMinute;
-    const elapsedDaySeconds = date.getHours() * 3_600 + secondsInHour;
-    const minuteTurn = secondsInMinute * ANGLE_STEP;
-    const xRotation = getXRotationAngle(secondsInMinute, date.getMinutes());
-    const zRotation = Z_SPEED * secondsInMinute;
-    const hourRotation = getCurrentHourRotationAngle(elapsedDaySeconds);
+    const pose = getClockPose(now, faithful);
     const rotationMatrix = rotationMatrixRef.current;
     const xRotationMatrix = xRotationMatrixRef.current;
     const zRotationMatrix = zRotationMatrixRef.current;
@@ -281,16 +248,16 @@ function OrbSystem({
     const orbitDirection = orbitDirectionRef.current;
     const orbitScaleVector = orbitScaleRef.current.set(...orbit.scale);
 
+    const orbitRadius = orbit.radius * pose.radiusScale;
+
     rotationMatrix
-      .copy(zRotationMatrix.makeRotationZ(zRotation))
-      .multiply(xRotationMatrix.makeRotationX(xRotation))
-      .multiply(hourRotationMatrix.makeRotationZ(hourRotation));
+      .copy(zRotationMatrix.makeRotationZ(pose.zRotation))
+      .multiply(xRotationMatrix.makeRotationX(pose.xRotation))
+      .multiply(hourRotationMatrix.makeRotationZ(pose.hourRotation));
 
     if (containerRef.current) {
-      containerRef.current.rotation.x =
-        (elapsedSeconds * CONTAINER_X_SPEED) % TAU;
-      containerRef.current.rotation.y =
-        (elapsedSeconds * CONTAINER_Y_SPEED) % TAU;
+      containerRef.current.rotation.x = pose.containerX;
+      containerRef.current.rotation.y = pose.containerY;
     }
 
     for (const index of ORB_INDICES) {
@@ -300,14 +267,14 @@ function OrbSystem({
         continue;
       }
 
-      const orbitAngle = minuteTurn * index;
+      const orbitAngle = pose.orbAngleStep * index;
 
       orbitDirection
         .set(Math.cos(orbitAngle), Math.sin(orbitAngle), 0)
         .applyMatrix4(rotationMatrix)
         .normalize()
         .multiply(orbitScaleVector)
-        .multiplyScalar(orbit.radius);
+        .multiplyScalar(orbitRadius);
 
       orb.position.copy(orbitDirection);
     }
@@ -338,6 +305,7 @@ function Scene({
   orbSize,
   orbit,
   timeMs,
+  faithful,
 }: {
   background: THREE.ColorRepresentation;
   mode: "ascii" | "glow";
@@ -347,16 +315,20 @@ function Scene({
   orbSize: number;
   orbit: { radius: number; scale: OrbitVector };
   timeMs?: number;
+  faithful: boolean;
 }) {
   return (
     <>
-      <color attach="background" args={[background]} />
+      {background !== "transparent" && (
+        <color attach="background" args={[background]} />
+      )}
       <OrbSystem
         palette={palette}
         speed={speed}
         orbSize={orbSize}
         orbit={orbit}
         timeMs={timeMs}
+        faithful={faithful}
       />
       {mode === "ascii" ? (
         <FixedGridAsciiRenderer fgColor={palette.fg} resolution={resolution} />
@@ -384,8 +356,9 @@ function FixedGridAsciiRenderer({
 }) {
   const { size, gl, scene, camera } = useThree();
   const textRef = useRef<HTMLPreElement>(null);
-  const sampleCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const sampleContextRef = useRef<CanvasRenderingContext2D | null>(null);
+  const renderTargetRef = useRef<THREE.WebGLRenderTarget | null>(null);
+  const pixelBufferRef = useRef<Uint8Array<ArrayBuffer> | null>(null);
+  const lastFrameRef = useRef("");
   const [charRatio, setCharRatio] = useState(FALLBACK_CHAR_WIDTH_RATIO);
   const [fontSize, setFontSize] = useState(12);
 
@@ -426,6 +399,28 @@ function FixedGridAsciiRenderer({
     return { columns, rows };
   }, [charRatio, resolution, size.height, size.width]);
 
+  useEffect(() => {
+    if (!grid) {
+      return;
+    }
+
+    const width = grid.columns * ASCII_SUPERSAMPLE;
+    const height = grid.rows * ASCII_SUPERSAMPLE;
+    const target = new THREE.WebGLRenderTarget(width, height, {
+      depthBuffer: true,
+      stencilBuffer: false,
+    });
+    target.texture.colorSpace = gl.outputColorSpace;
+    renderTargetRef.current = target;
+    pixelBufferRef.current = new Uint8Array(width * height * 4);
+
+    return () => {
+      target.dispose();
+      renderTargetRef.current = null;
+      pixelBufferRef.current = null;
+    };
+  }, [gl, grid]);
+
   useLayoutEffect(() => {
     if (!grid) {
       return;
@@ -439,31 +434,28 @@ function FixedGridAsciiRenderer({
       return;
     }
 
-    let sampleCanvas = sampleCanvasRef.current;
+    const target = renderTargetRef.current;
+    const data = pixelBufferRef.current;
 
-    if (!sampleCanvas) {
-      sampleCanvas = document.createElement("canvas");
-      sampleCanvasRef.current = sampleCanvas;
-    }
-
-    sampleCanvas.width = grid.columns;
-    sampleCanvas.height = grid.rows;
-
-    let context = sampleContextRef.current;
-
-    if (!context) {
-      context = sampleCanvas.getContext("2d", { willReadFrequently: true });
-      sampleContextRef.current = context;
-    }
-
-    if (!context) {
+    if (!target || !data) {
       return;
     }
 
+    const previousTarget = gl.getRenderTarget();
+    gl.setRenderTarget(target);
     gl.render(scene, camera);
-    context.drawImage(gl.domElement, 0, 0, grid.columns, grid.rows);
+    gl.setRenderTarget(previousTarget);
+    gl.readRenderTargetPixels(
+      target,
+      0,
+      0,
+      grid.columns * ASCII_SUPERSAMPLE,
+      grid.rows * ASCII_SUPERSAMPLE,
+      data,
+    );
 
-    const { data } = context.getImageData(0, 0, grid.columns, grid.rows);
+    const fineWidth = grid.columns * ASCII_SUPERSAMPLE;
+    const fineHeight = grid.rows * ASCII_SUPERSAMPLE;
     const lines: string[] = [];
 
     for (let row = 0; row < grid.rows; row += 1) {
@@ -476,18 +468,34 @@ function FixedGridAsciiRenderer({
           return;
         }
 
-        line += `<span style="color:${currentColor}">${escapeHtml(currentText)}</span>`;
+        line += `<span style="color:${currentColor}">${currentText}</span>`;
         currentText = "";
       };
 
       for (let column = 0; column < grid.columns; column += 1) {
-        const offset = (row * grid.columns + column) * 4;
-        const r = data[offset];
-        const g = data[offset + 1];
-        const b = data[offset + 2];
+        let rSum = 0;
+        let gSum = 0;
+        let bSum = 0;
+
+        for (let sy = 0; sy < ASCII_SUPERSAMPLE; sy += 1) {
+          const bufferY = fineHeight - 1 - (row * ASCII_SUPERSAMPLE + sy);
+          const rowOffset = bufferY * fineWidth;
+
+          for (let sx = 0; sx < ASCII_SUPERSAMPLE; sx += 1) {
+            const offset = (rowOffset + column * ASCII_SUPERSAMPLE + sx) * 4;
+            rSum += data[offset];
+            gSum += data[offset + 1];
+            bSum += data[offset + 2];
+          }
+        }
+
+        const samples = ASCII_SUPERSAMPLE * ASCII_SUPERSAMPLE;
+        const r = rSum / samples;
+        const g = gSum / samples;
+        const b = bSum / samples;
         const luminance = getAverageLuminance(r, g, b);
         const index = Math.round(luminance * (ASCII_CHARSET.length - 1));
-        const character = ASCII_CHARSET[index] ?? " ";
+        const character = ASCII_HTML_CHARSET[index] ?? " ";
         const color = getQuantizedColor(r, g, b);
 
         if (!currentColor) {
@@ -506,7 +514,12 @@ function FixedGridAsciiRenderer({
       lines.push(line);
     }
 
-    textRef.current.innerHTML = lines.join("\n");
+    const html = lines.join("\n");
+
+    if (html !== lastFrameRef.current) {
+      lastFrameRef.current = html;
+      textRef.current.innerHTML = html;
+    }
   }, 1);
 
   if (!grid) {
@@ -550,9 +563,11 @@ export function PS2Orbs({
   background = "#000000",
   speed = 1,
   orbSize,
+  cameraZoom = 1,
   palette,
   orbit,
   timeMs,
+  faithful = false,
   ascii = false,
   asciiResolution,
 }: PS2OrbsProps) {
@@ -595,9 +610,13 @@ export function PS2Orbs({
   return (
     <div className={className ?? "h-full w-full"}>
       <Canvas
-        camera={{ position: [0, 0, cameraZ], fov: BASE_CAMERA_FOV }}
-        dpr={[1, 2]}
-        gl={{ alpha: false, antialias: true }}
+        camera={{
+          position: [0, 0, cameraZ],
+          fov: BASE_CAMERA_FOV,
+          zoom: isFiniteNumber(cameraZoom) && cameraZoom > 0 ? cameraZoom : 1,
+        }}
+        dpr={resolvedMode === "ascii" ? 1 : [1, 2]}
+        gl={{ alpha: true, antialias: true }}
       >
         <Scene
           background={background}
@@ -608,6 +627,7 @@ export function PS2Orbs({
           orbSize={normalizedOrbSize}
           orbit={{ radius: resolvedOrbitRadius, scale: resolvedOrbitScale }}
           timeMs={resolvedTimeMs}
+          faithful={faithful}
         />
       </Canvas>
     </div>

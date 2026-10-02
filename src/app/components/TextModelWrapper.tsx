@@ -8,9 +8,9 @@ const TextModelCanvas = dynamic(() => import("./TextModelCanvas"), {
     loading: () => <Loading />
 });
 
-export default function TextModelWrapper() {
+export default function TextModelWrapper({ size = 270 }: { size?: number }) {
     return (
-        <div className="w-[270px] h-[270px]">
+        <div style={{ width: size, height: size }}>
             <TextModelCanvas />
         </div>
     );
