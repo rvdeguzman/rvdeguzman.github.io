@@ -9,7 +9,8 @@ async function request(url) {
 }
 
 try {
-    for (const path of ["/", "/posts/"]) {
+    // MDX-rendered pages catch React mismatches in compiled .mdx (see next.config.ts).
+    for (const path of ["/", "/posts/", "/posts/dots/", "/projects/ps2-orbs/"]) {
         const pageUrl = new URL(path, base);
         const html = await (await request(pageUrl)).text();
         const scripts = [...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)]

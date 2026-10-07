@@ -1,9 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { unified } from 'unified';
-import remarkParse from 'remark-parse';
-import remarkHtml from 'remark-html';
 
 const postsDirectory = path.join(process.cwd(), 'src/content/posts');
 
@@ -15,14 +12,6 @@ export interface Post {
     color: string;
     published: boolean;
     content: string;
-}
-
-async function markdownToHtml(markdown: string): Promise<string> {
-    const result = await unified()
-        .use(remarkParse)
-        .use(remarkHtml)
-        .process(markdown);
-    return result.toString();
 }
 
 export function getPosts(): Post[] {
@@ -73,15 +62,4 @@ export function getPost(slug: string): Post | null {
     } catch {
         return null;
     }
-}
-
-export async function getPostWithHtml(slug: string): Promise<(Post & { htmlContent: string }) | null> {
-    const post = getPost(slug);
-    if (!post) return null;
-    
-    const htmlContent = await markdownToHtml(post.content);
-    return {
-        ...post,
-        htmlContent,
-    };
 }

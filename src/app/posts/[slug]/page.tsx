@@ -1,4 +1,4 @@
-import { getPosts, getPostWithHtml } from "../../../lib/posts";
+import { getPosts, getPost } from "../../../lib/posts";
 import { notFound } from "next/navigation";
 
 interface PostPageProps {
@@ -7,17 +7,23 @@ interface PostPageProps {
     }>;
 }
 
+// Static export: only slugs from generateStaticParams exist.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
     return getPosts().map((post) => ({ slug: post.slug }));
 }
 
 export default async function PostPage({ params }: PostPageProps) {
     const { slug } = await params;
-    const post = await getPostWithHtml(slug);
+    const post = getPost(slug);
 
     if (!post || !post.published) {
         notFound();
     }
+
+    // Compiled by @next/mdx at build time, so posts can use JSX and imports.
+    const { default: Content } = await import(`@/content/posts/${slug}.mdx`);
 
     return (
         <main>
@@ -28,11 +34,9 @@ export default async function PostPage({ params }: PostPageProps) {
                     <span className="num">{post.date}</span>
                 </p>
             </header>
-            <article
-                className="prose rise"
-                style={{ "--i": 2 } as React.CSSProperties}
-                dangerouslySetInnerHTML={{ __html: post.htmlContent }}
-            />
+            <article className="prose rise" style={{ "--i": 2 } as React.CSSProperties}>
+                <Content />
+            </article>
         </main>
     );
 }

@@ -1,9 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { unified } from 'unified';
-import remarkParse from 'remark-parse';
-import remarkHtml from 'remark-html';
 
 const projectsDirectory = path.join(process.cwd(), 'src/content/projects');
 
@@ -13,78 +10,54 @@ export interface Project {
     description: string;
     tags: string[];
     featured: boolean;
+    /** Has its own /projects/[slug] page; the file body is the page's MDX. */
+    page: boolean;
     content: string;
     url?: string;
     color?: string;
-    htmlContent?: string;
 }
 
-async function markdownToHtml(markdown: string): Promise<string> {
-    const result = await unified()
-        .use(remarkParse)
-        .use(remarkHtml)
-        .process(markdown);
-    return result.toString();
+function readProject(slug: string): Project {
+    const fileContents = fs.readFileSync(path.join(projectsDirectory, `${slug}.mdx`), 'utf8');
+    const { data, content } = matter(fileContents);
+
+    return {
+        slug,
+        title: data.title,
+        description: data.description,
+        tags: data.tags || [],
+        featured: data.featured || false,
+        page: data.page === true,
+        content,
+        url: data.url,
+        color: data.color,
+    };
 }
 
-export function getProjects(): Project[] {
+export function getAllProjects(): Project[] {
     if (!fs.existsSync(projectsDirectory)) {
         return [];
     }
 
-    const fileNames = fs.readdirSync(projectsDirectory);
-    const projects = fileNames
+    return fs.readdirSync(projectsDirectory)
         .filter(name => name.endsWith('.mdx'))
-        .map(name => {
-            const slug = name.replace(/\.mdx$/, '');
-            const fullPath = path.join(projectsDirectory, name);
-            const fileContents = fs.readFileSync(fullPath, 'utf8');
-            const { data, content } = matter(fileContents);
+        .map(name => readProject(name.replace(/\.mdx$/, '')));
+}
 
-            return {
-                slug,
-                title: data.title,
-                description: data.description,
-                tags: data.tags || [],
-                featured: data.featured || false,
-                content,
-                url: data.url,
-                color: data.color,
-            };
-        })
-        .filter(project => project.featured);
+/** Projects shown on the homepage. */
+export function getProjects(): Project[] {
+    return getAllProjects().filter(project => project.featured);
+}
 
-    return projects;
+/** Projects that get a /projects/[slug] page. */
+export function getProjectPages(): Project[] {
+    return getAllProjects().filter(project => project.page);
 }
 
 export function getProject(slug: string): Project | null {
     try {
-        const fullPath = path.join(projectsDirectory, `${slug}.mdx`);
-        const fileContents = fs.readFileSync(fullPath, 'utf8');
-        const { data, content } = matter(fileContents);
-
-        return {
-            slug,
-            title: data.title,
-            description: data.description,
-            tags: data.tags || [],
-            featured: data.featured || false,
-            content,
-            url: data.url,
-            color: data.color,
-        };
+        return readProject(slug);
     } catch {
         return null;
     }
-}
-
-export async function getProjectWithHtml(slug: string): Promise<(Project & { htmlContent: string }) | null> {
-    const project = getProject(slug);
-    if (!project) return null;
-    
-    const htmlContent = await markdownToHtml(project.content);
-    return {
-        ...project,
-        htmlContent,
-    };
 }

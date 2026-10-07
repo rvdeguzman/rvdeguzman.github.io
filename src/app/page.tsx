@@ -165,6 +165,9 @@ export default async function Home() {
                 <span className="row-meta">{p.tags.join(" · ").toLowerCase()}</span>
               </>
             );
+            if (p.page) {
+              return <Link key={p.slug} href={`/projects/${p.slug}`} className="row">{inner}</Link>;
+            }
             return p.url ? (
               <a key={p.slug} href={p.url} className="row" target="_blank" rel="noopener noreferrer">{inner}</a>
             ) : (
